@@ -1,0 +1,5151 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     MODULE CONFIGURATION — update these when building a new module
+     ─────────────────────────────────────────────────────────────────
+     Module title:       "Small Talk to Business"
+     Module subtitle:    "Business Communication Module"
+     Brand icon:         two speech bubbles with arrow/bridge toward business line
+                         (SVG symbol: #icon-talk-to-business)
+     Favicon:            matching talk-to-business (data URI in <head>)
+     Total pages:        17  (TOTAL constant in JS)
+     Landing page text:  "17 pages" (page 1 hero-body)
+     Section breaks:     Start=1-3, Framework=4-5, Skills=6-11,
+                         Practice=12-15, Complete=16-17  (getSec() in JS)
+     Page titles:        PAGE_TITLES object in JS
+     Framework:          Open → Exchange → Bridge → Purpose → Continue
+     Suggested next:     Page 16 completion section
+     Quick Reference:    #quick-reference (jump-only, not in page flow)
+════════════════════════════════════════════════════════════════ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,
+  <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+  <rect width='100' height='100' rx='18' fill='%231C2B4A'/>
+  <path d='M22 28 Q22 20 30 20 L52 20 Q60 20 60 28 L60 42 Q60 50 52 50 L44 50 L38 58 L38 50 L30 50 Q22 50 22 42 Z' fill='none' stroke='%23ffffff' stroke-width='5.5' stroke-linejoin='round'/>
+  <path d='M56 38 Q56 32 63 32 L72 32 Q79 32 79 38 L79 48 Q79 54 72 54 L69 54 L69 60 L64 54 L63 54 Q56 54 56 48 Z' fill='none' stroke='%232D8F87' stroke-width='4.5' stroke-linejoin='round'/>
+  <path d='M62 65 L70 72 L85 58' fill='none' stroke='%232D8F87' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/>
+  </svg>">
+  <title>Small Talk to Business &#8212; Business Communication Module</title>
+  <style>
+    /* ── FONTS ──────────────────────────────────────────── */
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+    /* ── DESIGN TOKENS ─────────────────────────────────── */
+    :root {
+      --bg: #F5F4F0;
+      --card: #FFFFFF;
+      --navy: #1C2B4A;
+      --navy-mid: #2E4270;
+      --teal: #2D8F87;
+      --teal-light: #3AACA3;
+      --teal-pale: #E8F5F4;
+      --amber: #C8843A;
+      --amber-light: #FDF3E8;
+      --amber-border: #EAC08C;
+      --muted: #6B7280;
+      --muted-light: #9CA3AF;
+      --border: #E8E6E0;
+      --shadow: 0 2px 16px rgba(28, 43, 74, 0.07);
+      --shadow-md: 0 4px 24px rgba(28, 43, 74, 0.10);
+      --radius: 14px;
+      --radius-sm: 8px;
+      --transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── RESET ─────────────────────────────────────────── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--navy);
+      min-height: 100vh;
+      line-height: 1.6
+    }
+
+    /* ── HEADER ─────────────────────────────────────────── */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 8px rgba(28, 43, 74, 0.06);
+      padding: 0 32px
+    }
+
+    .top-bar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      flex-shrink: 0
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0
+    }
+
+    .brand-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      line-height: 1.2
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 400
+    }
+
+    .section-progress {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      justify-content: center;
+      max-width: 560px
+    }
+
+    .sec-step {
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .sec-dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      border: 2px solid var(--border);
+      background: #fff;
+      color: var(--muted);
+      transition: var(--transition);
+      flex-shrink: 0
+    }
+
+    .sec-step.active .sec-dot {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: #fff
+    }
+
+    .sec-step.done .sec-dot {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: #fff
+    }
+
+    .sec-label {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--muted);
+      white-space: nowrap;
+      letter-spacing: 0.01em;
+      transition: color 0.2s
+    }
+
+    .sec-step.active .sec-label {
+      color: var(--navy);
+      font-weight: 700
+    }
+
+    .sec-step.done .sec-label {
+      color: var(--teal)
+    }
+
+    .sec-connector {
+      width: 22px;
+      height: 1px;
+      background: var(--border);
+      margin: 0 8px;
+      flex-shrink: 0;
+      transition: var(--transition)
+    }
+
+    .sec-connector.done {
+      background: var(--teal)
+    }
+
+    @media(max-width:860px) {
+      .section-progress {
+        display: none
+      }
+    }
+
+    .sec-step.clickable {
+      cursor: pointer
+    }
+
+    .sec-step.clickable:hover .sec-dot {
+      opacity: 0.8
+    }
+
+    .sec-step.clickable:hover .sec-label {
+      color: var(--teal)
+    }
+
+    /* ── BOTTOM BAR ─────────────────────────────────────── */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -2px 16px rgba(28, 43, 74, 0.08);
+      z-index: 100;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.22s
+    }
+
+    .bottom-bar.hidden {
+      transform: translateY(100%);
+      opacity: 0;
+      pointer-events: none
+    }
+
+    .bottom-left {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .bottom-right {
+      display: flex;
+      align-items: center;
+      gap: 14px
+    }
+
+    .page-indicator {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 0.02em
+    }
+
+    .page-count-mobile {
+      display: none;
+    }
+
+    .page-title-desktop {
+      display: inline;
+    }
+
+    /* ── JUMP MENU ──────────────────────────────────────── */
+    .btn-jump {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: var(--transition)
+    }
+
+    .btn-jump:hover {
+      border-color: var(--navy);
+      color: var(--navy)
+    }
+
+    .btn-jump.open {
+      border-color: var(--navy);
+      color: var(--navy);
+      background: var(--bg)
+    }
+
+    .jump-panel {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(680px, calc(100vw - 32px));
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 40px rgba(28, 43, 74, 0.16);
+      z-index: 200;
+      display: none;
+      overflow: hidden
+    }
+
+    .jump-panel.open {
+      display: block;
+      animation: fadeUp 0.2s ease both
+    }
+
+    .jump-panel-inner {
+      padding: 16px 20px 20px;
+      max-height: 70vh;
+      overflow-y: auto
+    }
+
+    .jump-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted-light);
+      padding: 10px 0 6px;
+      border-top: 1px solid var(--border);
+      margin-top: 8px
+    }
+
+    .jump-section-label:first-child {
+      border-top: none;
+      margin-top: 0;
+      padding-top: 0
+    }
+
+    .jump-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px
+    }
+
+    @media(max-width:520px) {
+      .jump-links {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .jump-link {
+      display: flex;
+      flex-direction: column;
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background 0.15s;
+      border: none;
+      background: transparent;
+      text-align: left;
+      width: 100%
+    }
+
+    .jump-link:hover {
+      background: var(--bg)
+    }
+
+    .jump-link.current {
+      background: var(--teal-pale)
+    }
+
+    .jump-link-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.3
+    }
+
+    .jump-link.current .jump-link-title {
+      color: var(--teal)
+    }
+
+    .jump-link-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 1.4
+    }
+
+    .jump-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 199;
+      display: none
+    }
+
+    .jump-overlay.open {
+      display: block
+    }
+
+    /* ── BUTTONS ────────────────────────────────────────── */
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: transparent;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--navy-mid);
+      cursor: pointer;
+      transition: var(--transition)
+    }
+
+    .btn-back:hover {
+      border-color: var(--navy);
+      color: var(--navy)
+    }
+
+    .btn-back:disabled {
+      opacity: 0.3;
+      cursor: not-allowed
+    }
+
+    .btn-continue {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--navy);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 12px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 3px 14px rgba(28, 43, 74, 0.2)
+    }
+
+    .btn-continue:hover {
+      background: var(--navy-mid);
+      transform: translateY(-1px);
+      box-shadow: 0 5px 20px rgba(28, 43, 74, 0.28)
+    }
+
+    .btn-continue svg {
+      transition: transform 0.2s
+    }
+
+    .btn-continue:hover svg {
+      transform: translateX(3px)
+    }
+
+    .btn-teal {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--teal);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 12px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 3px 14px rgba(45, 143, 135, 0.25)
+    }
+
+    .btn-teal:hover {
+      background: var(--teal-light);
+      transform: translateY(-1px)
+    }
+
+    /* ── PAGE LAYOUT & ANIMATION ────────────────────────── */
+    .page-content {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 40px 24px 100px
+    }
+
+    .page {
+      display: none;
+      animation: fadeUp 0.26s cubic-bezier(0.4, 0, 0.2, 1) both
+    }
+
+    .page.active {
+      display: block
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(-8px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    /* ── TYPOGRAPHY ─────────────────────────────────────── */
+    .page-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--teal-pale);
+      border: 1px solid rgba(45, 143, 135, 0.25);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--teal);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 14px
+    }
+
+    .page-eyebrow.amber {
+      background: var(--amber-light);
+      border-color: var(--amber-border);
+      color: var(--amber)
+    }
+
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.1;
+      color: var(--navy);
+      margin-bottom: 14px;
+      letter-spacing: -0.01em
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--teal)
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--muted);
+      font-weight: 400;
+      max-width: 560px;
+      line-height: 1.55;
+      margin-bottom: 10px
+    }
+
+    .hero-body {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 580px;
+      line-height: 1.7;
+      margin-bottom: 36px
+    }
+
+    .page-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px
+    }
+
+    .page-subtitle {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 28px;
+      line-height: 1.55;
+      max-width: 620px
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 6px
+    }
+
+    /* ── CARDS & LAYOUT ─────────────────────────────────── */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 24px
+    }
+
+    .card.card-sm {
+      padding: 18px 20px
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px
+    }
+
+    @media(max-width:680px) {
+      .two-col {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* ── LANDING: FLOW VISUAL ───────────────────────────── */
+    .flow-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 32px 0 40px
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .flow-pill {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 24px;
+      padding: 8px 18px;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--navy-mid);
+      box-shadow: var(--shadow);
+      white-space: nowrap
+    }
+
+    .flow-pill.hl {
+      background: var(--navy);
+      color: white;
+      border-color: var(--navy)
+    }
+
+    .flow-pill.teal {
+      background: var(--teal);
+      color: white;
+      border-color: var(--teal)
+    }
+
+    .flow-arrow {
+      color: var(--muted);
+      font-size: 13px;
+      opacity: 0.45
+    }
+
+    /* ── PRIMARY BUTTON ─────────────────────────────────── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--navy);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      padding: 16px 36px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      letter-spacing: 0.01em;
+      box-shadow: 0 4px 20px rgba(28, 43, 74, 0.22)
+    }
+
+    .btn-primary:hover {
+      background: var(--navy-mid);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 28px rgba(28, 43, 74, 0.28)
+    }
+
+    .btn-primary svg {
+      transition: transform 0.2s
+    }
+
+    .btn-primary:hover svg {
+      transform: translateX(3px)
+    }
+
+    /* ── OVERVIEW: BUILD LIST ───────────────────────────── */
+    .build-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .build-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14.5px;
+      color: var(--navy);
+      line-height: 1.5
+    }
+
+    .build-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--teal-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px
+    }
+
+    /* ── SKILL PATH MAP ─────────────────────────────────── */
+    .skill-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px
+    }
+
+    .skill-stack-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      transition: var(--transition)
+    }
+
+    .skill-stack-item:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px)
+    }
+
+    .skill-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0
+    }
+
+    .skill-stack-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 3px
+    }
+
+    .skill-stack-desc {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.5
+    }
+
+    /* ── CORE FRAMEWORK ─────────────────────────────────── */
+    .framework-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    .fw-step {
+      display: flex;
+      gap: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow)
+    }
+
+    .fw-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--teal-pale);
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0
+    }
+
+    .fw-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px
+    }
+
+    .fw-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px
+    }
+
+    .fw-phrase {
+      font-size: 13.5px;
+      color: var(--muted);
+      font-style: italic
+    }
+
+    /* ── MEMORY BAR ─────────────────────────────────────── */
+    .memory-bar {
+      background: var(--navy);
+      color: white;
+      border-radius: var(--radius);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 16px
+    }
+
+    .memory-bar-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.55;
+      margin-right: 6px
+    }
+
+    .memory-pill {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 13px;
+      font-weight: 600
+    }
+
+    .memory-arrow {
+      opacity: 0.4;
+      font-size: 13px
+    }
+
+    /* ── COMPLETION FRAMEWORK LIST ──────────────────────── */
+    .completion-framework {
+      background: var(--navy);
+      color: white;
+      border-radius: var(--radius);
+      padding: 24px 26px;
+      box-shadow: var(--shadow);
+    }
+
+    .completion-framework-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.48);
+      margin-bottom: 18px;
+    }
+
+    .completion-framework-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .completion-framework-step {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      position: relative;
+      padding: 0 0 16px;
+    }
+
+    .completion-framework-step:last-child {
+      padding-bottom: 0;
+    }
+
+    .completion-framework-step:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 14px;
+      top: 32px;
+      width: 1px;
+      height: calc(100% - 18px);
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .completion-framework-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.13);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .completion-framework-name {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    /* ── MINI EXAMPLE ───────────────────────────────────── */
+    .mini-example {
+      background: var(--teal-pale);
+      border: 1px solid rgba(45, 143, 135, 0.2);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-top: 14px
+    }
+
+    .mini-example-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 10px
+    }
+
+    .client-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em
+    }
+
+    .client-quote {
+      background: white;
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 13.5px;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 8px;
+      border-left: 3px solid var(--teal)
+    }
+
+    .response-text {
+      font-size: 13.5px;
+      color: var(--navy);
+      line-height: 1.6
+    }
+
+    /* ── TOPIC MAP (Page 5) ─────────────────────────────── */
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+      margin-top: 8px
+    }
+
+    .topic-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow)
+    }
+
+    .topic-card:hover {
+      border-color: var(--teal);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px)
+    }
+
+    .topic-card.active {
+      border-color: var(--teal);
+      background: var(--teal-pale)
+    }
+
+    .topic-type {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal);
+      margin-bottom: 6px
+    }
+
+    .topic-example {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--navy);
+      font-style: italic;
+      margin-bottom: 10px;
+      line-height: 1.4
+    }
+
+    .topic-meta {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.5
+    }
+
+    .topic-meta strong {
+      color: var(--navy-mid);
+      font-weight: 600
+    }
+
+    .topic-detail {
+      display: none;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(45, 143, 135, 0.2);
+      font-size: 13px;
+      color: var(--navy-mid);
+      line-height: 1.55
+    }
+
+    .topic-card.active .topic-detail {
+      display: block
+    }
+
+    .topic-move {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--teal);
+      color: white;
+      border-radius: 20px;
+      padding: 4px 11px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 8px
+    }
+
+    /* ── WEAK PATTERN CARDS ─────────────────────────────── */
+    .weak-pattern-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 10px;
+      margin-top: 8px
+    }
+
+    .weak-pattern-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      box-shadow: var(--shadow)
+    }
+
+    .weak-pattern-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #DC2626;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px
+    }
+
+    .weak-pattern-weak {
+      font-size: 13px;
+      color: #7F1D1D;
+      font-style: italic;
+      margin-bottom: 6px;
+      line-height: 1.45
+    }
+
+    .weak-pattern-better {
+      font-size: 13px;
+      color: var(--navy-mid);
+      line-height: 1.45
+    }
+
+    .weak-pattern-better strong {
+      color: var(--teal);
+      font-weight: 600
+    }
+
+    /* ── SKILL BLOCK ────────────────────────────────────── */
+    .skill-hero {
+      background: var(--navy);
+      border-radius: var(--radius);
+      padding: 28px 28px 24px;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .skill-hero::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: rgba(45, 143, 135, 0.12)
+    }
+
+    .skill-number-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 10px
+    }
+
+    .skill-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(22px, 3vw, 32px);
+      color: white;
+      line-height: 1.15;
+      margin-bottom: 8px
+    }
+
+    .skill-key-move {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.55
+    }
+
+    .key-move-hl {
+      color: white;
+      font-weight: 600
+    }
+
+    .info-block {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow)
+    }
+
+    .info-block-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 8px
+    }
+
+    .info-block-text {
+      font-size: 14px;
+      color: var(--navy);
+      line-height: 1.6
+    }
+
+    .principle-block {
+      background: var(--amber-light);
+      border: 1px solid var(--amber-border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px
+    }
+
+    .principle-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: rgba(200, 132, 58, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px
+    }
+
+    .principle-text {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--amber);
+      line-height: 1.45
+    }
+
+    /* ── PHRASE CHIPS ───────────────────────────────────── */
+    .phrase-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px
+    }
+
+    .phrase-chip {
+      background: var(--teal-pale);
+      border: 1px solid rgba(45, 143, 135, 0.25);
+      border-radius: 24px;
+      padding: 7px 15px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--teal);
+      cursor: pointer;
+      transition: var(--transition);
+      user-select: none
+    }
+
+    .phrase-chip:hover,
+    .phrase-chip.selected {
+      background: var(--teal);
+      color: white
+    }
+
+    /* ── WEAK / STRONGER ────────────────────────────────── */
+    .ws-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 8px
+    }
+
+    @media(max-width:600px) {
+      .ws-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .ws-card {
+      border-radius: var(--radius);
+      padding: 16px 18px
+    }
+
+    .ws-card.weak {
+      background: #FEF2F2;
+      border: 1px solid #FECACA
+    }
+
+    .ws-card.strong {
+      background: var(--teal-pale);
+      border: 1px solid rgba(45, 143, 135, 0.25)
+    }
+
+    .ws-tag {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px
+    }
+
+    .ws-card.weak .ws-tag {
+      color: #DC2626
+    }
+
+    .ws-card.strong .ws-tag {
+      color: var(--teal)
+    }
+
+    .ws-text {
+      font-size: 13.5px;
+      line-height: 1.55;
+      font-style: italic
+    }
+
+    .ws-card.weak .ws-text {
+      color: #7F1D1D
+    }
+
+    .ws-card.strong .ws-text {
+      color: var(--navy)
+    }
+
+    /* ── PRACTICE TABS ──────────────────────────────────── */
+    .practice-section {
+      margin-top: 18px
+    }
+
+    .practice-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+      flex-wrap: wrap
+    }
+
+    .practice-tab {
+      padding: 7px 16px;
+      border-radius: 24px;
+      border: 1.5px solid var(--border);
+      background: var(--card);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: var(--transition)
+    }
+
+    .practice-tab.active {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white
+    }
+
+    .practice-tab:hover:not(.active) {
+      border-color: var(--navy);
+      color: var(--navy)
+    }
+
+    .practice-pane {
+      display: none
+    }
+
+    .practice-pane.active {
+      display: block
+    }
+
+    .practice-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      box-shadow: var(--shadow)
+    }
+
+    .practice-prompt {
+      background: #F8F7F4;
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 14px;
+      font-style: italic;
+      color: var(--navy-mid);
+      border-left: 3px solid var(--navy);
+      margin-bottom: 14px;
+      line-height: 1.55
+    }
+
+    .practice-task {
+      font-size: 14px;
+      color: var(--navy);
+      line-height: 1.6
+    }
+
+    .practice-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px
+    }
+
+    .practice-opt {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 5px 13px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--navy-mid);
+      cursor: pointer;
+      transition: var(--transition)
+    }
+
+    .practice-opt:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+      background: var(--teal-pale)
+    }
+
+    .practice-opt.selected {
+      background: var(--teal);
+      color: white;
+      border-color: var(--teal)
+    }
+
+    /* ── CHALLENGE CARDS ────────────────────────────────── */
+    .challenge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+      margin-top: 8px
+    }
+
+    .challenge-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow)
+    }
+
+    .challenge-card:hover {
+      border-color: var(--amber);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px)
+    }
+
+    .challenge-card.active {
+      border-color: var(--amber);
+      background: var(--amber-light)
+    }
+
+    .challenge-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--amber-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+      flex-shrink: 0
+    }
+
+    .challenge-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px
+    }
+
+    .challenge-quote {
+      font-size: 13px;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.45
+    }
+
+    /* ── QUICK RECAP ────────────────────────────────────── */
+    .quick-recap {
+      background: var(--navy);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-top: 18px
+    }
+
+    .recap-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0
+    }
+
+    .recap-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 4px
+    }
+
+    .recap-text {
+      font-size: 14px;
+      color: white;
+      line-height: 1.55;
+      margin-bottom: 6px
+    }
+
+    .recap-phrase {
+      display: inline-block;
+      background: rgba(45, 143, 135, 0.25);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #3AACA3;
+      font-style: italic
+    }
+
+    /* ── NEXT MODULES ───────────────────────────────────── */
+    .suggested-next-section {
+      margin-top: 28px;
+    }
+
+    .suggested-next-label {
+      margin-bottom: 12px;
+    }
+
+    .next-modules {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .next-module-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      gap: 16px;
+      align-items: center;
+      transition: var(--transition);
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .next-module-card:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(45, 143, 135, 0.28);
+    }
+
+    .next-module-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--teal-pale);
+      color: var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .next-module-kicker {
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 4px;
+    }
+
+    .next-module-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.25;
+      margin-bottom: 5px;
+    }
+
+    .next-module-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .next-module-desc strong {
+      color: var(--navy-mid);
+      font-weight: 700;
+    }
+
+    .next-module-arrow {
+      color: var(--teal);
+      font-size: 24px;
+      line-height: 1;
+      opacity: 0.85;
+      padding-left: 4px;
+    }
+
+    @media(max-width:700px) {
+      .next-modules {
+        grid-template-columns: 1fr;
+      }
+
+      .next-module-card {
+        grid-template-columns: 48px 1fr auto;
+        gap: 14px;
+        padding: 16px;
+      }
+
+      .next-module-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+      }
+
+      .next-module-arrow {
+        font-size: 20px;
+      }
+    }
+
+    /* ── OPTIONAL QUESTION ──────────────────────────────── */
+    .optional-q {
+      background: var(--card);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-top: 16px
+    }
+
+    .optional-q-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted-light);
+      margin-bottom: 6px
+    }
+
+    .optional-q-text {
+      font-size: 14px;
+      color: var(--muted);
+      font-style: italic
+    }
+
+    /* ── PUT IT TOGETHER: SEQUENCE ──────────────────────── */
+    .sequence-steps {
+      display: flex;
+      flex-direction: column
+    }
+
+    .seq-step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start
+    }
+
+    .seq-line-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-shrink: 0;
+      width: 32px
+    }
+
+    .seq-dot {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--teal-pale);
+      border: 2px solid var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--teal);
+      flex-shrink: 0
+    }
+
+    .seq-connector {
+      width: 2px;
+      height: 24px;
+      background: rgba(45, 143, 135, 0.2)
+    }
+
+    .seq-content {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      flex: 1;
+      box-shadow: var(--shadow)
+    }
+
+    .seq-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--teal);
+      margin-bottom: 4px
+    }
+
+    .seq-phrase {
+      font-size: 14px;
+      font-style: italic;
+      color: var(--navy)
+    }
+
+    /* ── FULL EXAMPLE TOGGLE ────────────────────────────── */
+    .full-example {
+      margin-top: 16px
+    }
+
+    .full-example-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow)
+    }
+
+    .full-example-toggle:hover {
+      border-color: var(--teal)
+    }
+
+    .full-example-toggle.open {
+      border-color: var(--teal);
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0
+    }
+
+    .toggle-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy)
+    }
+
+    .toggle-sub {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-top: 2px
+    }
+
+    .toggle-chevron {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.22s;
+      flex-shrink: 0
+    }
+
+    .full-example-toggle.open .toggle-chevron {
+      transform: rotate(180deg)
+    }
+
+    .full-example-body {
+      display: none;
+      background: var(--teal-pale);
+      border: 1.5px solid var(--teal);
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      padding: 18px 20px
+    }
+
+    .full-example-toggle.open+.full-example-body {
+      display: block
+    }
+
+    /* ── LANGUAGE BANK ──────────────────────────────────── */
+    .lang-accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 8px
+    }
+
+    .lang-group {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow)
+    }
+
+    .lang-group-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: background 0.18s;
+      user-select: none
+    }
+
+    .lang-group-header:hover {
+      background: #FAFAF8
+    }
+
+    .lang-group-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--navy)
+    }
+
+    .lang-group-count {
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: 8px
+    }
+
+    .lang-chevron {
+      transition: transform 0.22s
+    }
+
+    .lang-group.open .lang-chevron {
+      transform: rotate(180deg)
+    }
+
+    .lang-group-body {
+      display: none;
+      padding: 4px 20px 18px;
+      border-top: 1px solid var(--border)
+    }
+
+    .lang-group.open .lang-group-body {
+      display: block
+    }
+
+    .lang-phrase-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 12px
+    }
+
+    .lang-phrase {
+      background: var(--teal-pale);
+      border: 1px solid rgba(45, 143, 135, 0.2);
+      border-radius: 20px;
+      padding: 7px 14px;
+      font-size: 13px;
+      color: var(--teal);
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition)
+    }
+
+    .lang-phrase:hover {
+      background: var(--teal);
+      color: white
+    }
+
+    /* ── PRACTICE PROMPT LIBRARY ────────────────────────── */
+    .prompt-library {
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .prompt-item {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow)
+    }
+
+    .prompt-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: background 0.18s
+    }
+
+    .prompt-header:hover {
+      background: #FAFAF8
+    }
+
+    .prompt-item.open .prompt-header {
+      background: var(--navy)
+    }
+
+    .prompt-item.open .prompt-title {
+      color: white
+    }
+
+    .prompt-item.open .prompt-quote {
+      color: rgba(255, 255, 255, 0.65)
+    }
+
+    .prompt-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 2px
+    }
+
+    .prompt-quote {
+      font-size: 12.5px;
+      color: var(--muted);
+      font-style: italic
+    }
+
+    .prompt-chevron {
+      flex-shrink: 0;
+      transition: transform 0.22s
+    }
+
+    .prompt-item.open .prompt-chevron {
+      transform: rotate(180deg)
+    }
+
+    .prompt-item.open .prompt-chevron path {
+      stroke: white
+    }
+
+    .prompt-body {
+      display: none;
+      padding: 18px 20px;
+      border-top: 1px solid var(--border)
+    }
+
+    .prompt-item.open .prompt-body {
+      display: block
+    }
+
+    .prompt-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px
+    }
+
+    .prompt-opt {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--navy-mid);
+      cursor: pointer;
+      transition: var(--transition)
+    }
+
+    .prompt-opt:hover {
+      background: var(--teal-pale);
+      border-color: var(--teal);
+      color: var(--teal)
+    }
+
+    .prompt-opt.selected {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: white
+    }
+
+    /* ── WHAT GOOD LOOKS LIKE ───────────────────────────── */
+    .good-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .good-item {
+      display: flex;
+      gap: 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      box-shadow: var(--shadow)
+    }
+
+    .good-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--teal);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px
+    }
+
+    .good-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px
+    }
+
+    .good-phrase {
+      font-size: 13px;
+      color: var(--muted);
+      font-style: italic
+    }
+
+    .checklist {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--teal-pale);
+      border: 1px solid rgba(45, 143, 135, 0.2);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--teal);
+      font-weight: 500
+    }
+
+    /* ── COMPLETION PAGE ────────────────────────────────── */
+    .completion-hero {
+      text-align: center;
+      padding: 32px 20px 36px
+    }
+
+    .completion-badge {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+      box-shadow: 0 6px 28px rgba(45, 143, 135, 0.32)
+    }
+
+    .completion-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      color: var(--navy);
+      margin-bottom: 10px;
+      line-height: 1.15
+    }
+
+    .completion-sub {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 24px;
+      line-height: 1.55
+    }
+
+    .win-message {
+      background: var(--teal);
+      color: white;
+      border-radius: var(--radius);
+      padding: 18px 24px;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(45, 143, 135, 0.28)
+    }
+
+    .can-do-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
+      margin-bottom: 16px
+    }
+
+    .can-do-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--navy)
+    }
+
+    .can-do-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--teal-pale);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0
+    }
+
+    .reflection-q {
+      background: var(--card);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius-sm);
+      padding: 13px 16px;
+      font-size: 14px;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 8px
+    }
+
+    /* ── BONUS ROUND ────────────────────────────────────── */
+    .bonus-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+      margin-top: 8px
+    }
+
+    .bonus-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      transition: var(--transition)
+    }
+
+    .bonus-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px)
+    }
+
+    .bonus-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted-light);
+      margin-bottom: 8px
+    }
+
+    .bonus-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px
+    }
+
+    .bonus-desc {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-bottom: 12px
+    }
+
+    .bonus-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px
+    }
+
+    .bonus-opt {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 12.5px;
+      color: var(--navy-mid);
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition)
+    }
+
+    .bonus-opt:hover,
+    .bonus-opt.selected {
+      background: var(--navy);
+      color: white;
+      border-color: var(--navy)
+    }
+
+    .bonus-for {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 6px;
+      font-style: italic
+    }
+
+    /* ── UTILITY: SPACING ─────────────────────────────── */
+    .mt-8 {
+      margin-top: 8px
+    }
+
+    .mt-12 {
+      margin-top: 12px
+    }
+
+    .mt-14 {
+      margin-top: 14px
+    }
+
+    .mt-16 {
+      margin-top: 16px
+    }
+
+    .mt-20 {
+      margin-top: 20px
+    }
+
+    .mb-8 {
+      margin-bottom: 8px
+    }
+
+    .mb-12 {
+      margin-bottom: 12px
+    }
+
+    .mb-14 {
+      margin-bottom: 14px
+    }
+
+    .mt-24 {
+      margin-top: 24px
+    }
+
+    .mt-28 {
+      margin-top: 28px
+    }
+
+    .mt-32 {
+      margin-top: 32px
+    }
+
+    /* ── MODIFIER CLASSES ──────────────────────────────── */
+    .skill-num.teal {
+      background: var(--teal)
+    }
+
+    .fw-num.teal {
+      background: var(--teal-pale);
+      color: var(--teal)
+    }
+
+    .seq-dot.final {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: white
+    }
+
+    .card.card-navy {
+      background: var(--navy);
+      border-color: var(--navy)
+    }
+
+    .card.card-amber {
+      background: var(--amber-light);
+      border-color: var(--amber-border)
+    }
+
+    .client-label.mt-10 {
+      margin-top: 10px
+    }
+
+    .client-label.mt-12 {
+      margin-top: 12px
+    }
+
+    .practice-opt.block {
+      border-radius: var(--radius-sm);
+      padding: 10px 14px
+    }
+
+    .section-label.on-dark {
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 8px
+    }
+
+    .reflection-q.last {
+      margin-bottom: 0
+    }
+
+    .bonus-for.mt {
+      margin-top: 12px
+    }
+
+    /* Tap hint */
+    .tap-hint {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 20px;
+      font-style: italic
+    }
+
+    /* Prompt body hint */
+    .prompt-hint {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px
+    }
+
+    /* Completion page action group */
+    .completion-actions {
+      text-align: center;
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px
+    }
+
+    /* Challenge example box */
+    .challenge-example {
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px
+    }
+
+    .challenge-example p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 4px
+    }
+
+    .challenge-example p:last-child {
+      margin-bottom: 0
+    }
+
+    .challenge-example .task {
+      color: var(--teal);
+      font-weight: 600
+    }
+
+    /* ── STUDY TOOLS ────────────────────────────────────────── */
+    .study-tools {
+      margin-top: 28px
+    }
+
+    .study-tools-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 12px
+    }
+
+    .study-tools-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px
+    }
+
+    @media (max-width: 600px) {
+      .study-tools-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .study-tool-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    .study-tool-header {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .study-tool-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--teal-pale);
+      color: var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0
+    }
+
+    .study-tool-kicker {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 3px
+    }
+
+    .study-tool-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.25
+    }
+
+    .study-tool-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55
+    }
+
+    .study-tool-audio {
+      width: 100%;
+      height: 40px;
+      border-radius: var(--radius-sm);
+      accent-color: var(--teal)
+    }
+
+    .study-tool-audio::-webkit-media-controls-panel {
+      background: var(--teal-pale)
+    }
+
+    .study-tool-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--teal-pale);
+      border: 1px solid rgba(45, 143, 135, 0.25);
+      border-radius: var(--radius-sm);
+      padding: 9px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal);
+      text-decoration: none;
+      transition: var(--transition);
+      align-self: flex-start
+    }
+
+    .study-tool-link:hover {
+      background: var(--teal);
+      color: white
+    }
+
+    /* ── PRINT / SAVE AS PDF (Quick Reference only) ────────── */
+    @media print {
+
+      .top-bar,
+      .bottom-bar,
+      .jump-overlay,
+      .jump-panel {
+        display: none !important;
+      }
+
+      body {
+        background: white;
+      }
+
+      .page {
+        display: none !important;
+      }
+
+      #quick-reference {
+        display: block !important;
+        animation: none !important;
+      }
+
+      .page-content {
+        padding: 24px;
+        max-width: 100%;
+      }
+
+      .memory-bar {
+        box-shadow: none;
+      }
+
+      .good-item {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+
+      .mini-example {
+        break-inside: avoid;
+      }
+
+      #qr-print-btn {
+        display: none !important;
+      }
+    }
+
+    /* ── MOBILE FIRST ─────────────────────────────────────────
+       Breakpoint: ≤ 540px (single-column phone)
+    ──────────────────────────────────────────────────────────── */
+    @media (max-width: 540px) {
+      .page-content {
+        padding: 24px 16px 90px
+      }
+
+      .brand-sub {
+        display: none
+      }
+
+      .bottom-bar {
+        padding: 0 12px;
+        height: 64px
+      }
+
+      .bottom-left {
+        gap: 6px;
+        flex-shrink: 1;
+        min-width: 0
+      }
+
+      .bottom-right {
+        gap: 8px;
+        flex-shrink: 0
+      }
+
+      .page-indicator {
+        font-size: 11px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 80px
+      }
+
+      .page-count-desktop,
+      .page-title-desktop {
+        display: none;
+      }
+
+      .page-count-mobile {
+        display: inline;
+      }
+
+      .btn-back {
+        padding: 9px 12px;
+        font-size: 13px
+      }
+
+      .btn-jump {
+        padding: 9px 12px;
+        font-size: 13px
+      }
+
+      .btn-continue {
+        padding: 10px 16px;
+        font-size: 13.5px
+      }
+
+      .jump-panel {
+        bottom: 68px;
+        left: 8px;
+        right: 8px;
+        width: auto;
+        transform: none
+      }
+
+      .flow-visual {
+        gap: 6px;
+        margin: 20px 0 28px;
+        justify-content: center
+      }
+
+      .flow-arrow {
+        display: none
+      }
+
+      .flow-pill {
+        font-size: 12.5px;
+        padding: 7px 14px
+      }
+
+      .phrase-chip {
+        font-size: 12.5px;
+        padding: 6px 12px
+      }
+
+      .practice-tabs {
+        flex-wrap: nowrap;
+        gap: 5px
+      }
+
+      .practice-tab {
+        font-size: 11.5px;
+        padding: 7px 11px;
+        white-space: nowrap
+      }
+
+      .memory-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 20px
+      }
+
+      .memory-bar-label {
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        color: rgba(255, 255, 255, 0.48);
+        margin-bottom: 14px;
+        margin-right: 0
+      }
+
+      .memory-arrow {
+        display: none
+      }
+
+      .memory-pill {
+        display: block;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius-sm);
+        padding: 10px 14px;
+        font-size: 14px;
+        font-weight: 600;
+        color: white;
+        margin-bottom: 6px
+      }
+
+      .memory-pill:last-of-type {
+        margin-bottom: 0
+      }
+
+      .skill-key-move {
+        font-size: 13px
+      }
+
+      .page-title {
+        font-size: 26px
+      }
+
+      .hero-title {
+        font-size: clamp(30px, 9vw, 42px)
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+     SVG ICON SYMBOL LIBRARY
+     Usage: <svg width="W" height="H"><use href="#icon-NAME"/></svg>
+     Colour inherits via currentColor — set on parent or svg element.
+  ════════════════════════════════════════════════════════════════ -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="icon-check" viewBox="0 0 10 10">
+      <path d="M2 5.5l2 2L8 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-check-lg" viewBox="0 0 11 11">
+      <path d="M2 5.5l2.5 2.5L9 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-check-sm" viewBox="0 0 12 12">
+      <path d="M2 6l3 3 5-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-bulb" viewBox="0 0 14 14">
+      <path d="M7 2a3.5 3.5 0 0 1 2 6.4V10a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8.4A3.5 3.5 0 0 1 7 2z" fill="none"
+        stroke="currentColor" stroke-width="1.3" />
+      <path d="M5.5 12h3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+    </symbol>
+    <symbol id="icon-target" viewBox="0 0 14 14">
+      <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3" opacity="0.6" fill="none" />
+      <circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1.3" opacity="0.8" fill="none" />
+      <circle cx="7" cy="7" r="1" fill="currentColor" />
+    </symbol>
+    <symbol id="icon-chevron-down" viewBox="0 0 16 16">
+      <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-chevron-down-sm" viewBox="0 0 14 14">
+      <path d="M3 5l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-chevron-down-md" viewBox="0 0 18 18">
+      <path d="M4.5 7L9 11.5 13.5 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 14 14">
+      <path d="M5 3l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-arrow-right-wide" viewBox="0 0 16 16">
+      <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-arrow-right-bonus" viewBox="0 0 15 15">
+      <path d="M3 7.5h9M8 3.5l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-arrow-left" viewBox="0 0 14 14">
+      <path d="M9 3L5 7l4 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-list" viewBox="0 0 14 14">
+      <path d="M2 4h10M2 7h7M2 10h5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+    </symbol>
+    <symbol id="icon-talk-to-business" viewBox="0 0 20 20">
+      <path d="M2 4 Q2 2 4 2 L10 2 Q12 2 12 4 L12 8 Q12 10 10 10 L8 10 L6.5 12 L6.5 10 L4 10 Q2 10 2 8 Z" fill="none"
+        stroke="white" stroke-width="1.2" stroke-linejoin="round" opacity="0.85" />
+      <path
+        d="M11 7 Q11 5.5 12.5 5.5 L15 5.5 Q16.5 5.5 16.5 7 L16.5 9.5 Q16.5 11 15 11 L14 11 L14 12.5 L12.5 11 L12.5 11 Q11 11 11 9.5 Z"
+        fill="none" stroke="#2D8F87" stroke-width="1.1" stroke-linejoin="round" />
+      <path d="M12 14 L14 16 L18 12" fill="none" stroke="#2D8F87" stroke-width="1.5" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-podcast" viewBox="0 0 20 20">
+      <circle cx="10" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="1.4" />
+      <path d="M5.5 8a4.5 4.5 0 0 0 9 0" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+      <path d="M3 8a7 7 0 0 0 14 0" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
+        opacity="0.5" />
+      <line x1="10" y1="12.5" x2="10" y2="17" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+      <path d="M7.5 17h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+    </symbol>
+    <symbol id="icon-mindmap" viewBox="0 0 20 20">
+      <circle cx="10" cy="10" r="2.5" fill="none" stroke="currentColor" stroke-width="1.4" />
+      <circle cx="3.5" cy="5" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3" />
+      <circle cx="3.5" cy="15" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3" />
+      <circle cx="16.5" cy="5" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3" />
+      <circle cx="16.5" cy="15" r="1.5" fill="none" stroke="currentColor" stroke-width="1.3" />
+      <line x1="7.7" y1="8.4" x2="4.8" y2="6.1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+      <line x1="7.7" y1="11.6" x2="4.8" y2="13.9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+      <line x1="12.3" y1="8.4" x2="15.2" y2="6.1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+      <line x1="12.3" y1="11.6" x2="15.2" y2="13.9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+    </symbol>
+    <symbol id="icon-circle-check" viewBox="0 0 12 12">
+      <circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" stroke-width="1.3" />
+      <path d="M4 6l1.5 1.5L8 4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+    </symbol>
+    <symbol id="icon-print" viewBox="0 0 15 15">
+      <path d="M4 5V2h7v3M4 10H2V6h11v4h-2M4 10v3h7v-3" fill="none" stroke="currentColor" stroke-width="1.4"
+        stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
+    <symbol id="icon-doc-plus" viewBox="0 0 13 13">
+      <rect x="1.5" y="1.5" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.3" />
+      <path d="M4 6.5h5M6.5 4v5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+    </symbol>
+  </svg>
+
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="20" height="20">
+            <use href="#icon-talk-to-business" />
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">Small Talk to Business</div>
+          <div class="brand-sub">Business Communication Module</div>
+        </div>
+      </div>
+      <nav class="section-progress" id="sectionProgress">
+        <div class="sec-step clickable" id="sec-0" onclick="goToPage(1)">
+          <div class="sec-dot">1</div><span class="sec-label">Start</span>
+        </div>
+        <div class="sec-connector" id="conn-0"></div>
+        <div class="sec-step clickable" id="sec-1" onclick="goToPage(4)">
+          <div class="sec-dot">2</div><span class="sec-label">Framework</span>
+        </div>
+        <div class="sec-connector" id="conn-1"></div>
+        <div class="sec-step clickable" id="sec-2" onclick="goToPage(6)">
+          <div class="sec-dot">3</div><span class="sec-label">Skills</span>
+        </div>
+        <div class="sec-connector" id="conn-2"></div>
+        <div class="sec-step clickable" id="sec-3" onclick="goToPage(12)">
+          <div class="sec-dot">4</div><span class="sec-label">Practice</span>
+        </div>
+        <div class="sec-connector" id="conn-3"></div>
+        <div class="sec-step clickable" id="sec-4" onclick="goToPage(16)">
+          <div class="sec-dot">5</div><span class="sec-label">Complete</span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-content">
+
+    <!-- PAGE 1 ─ LANDING ──────────────────────────────────────── -->
+    <div class="page active" id="page-1">
+      <div style="text-align:center;padding:20px 0 48px">
+        <div class="page-eyebrow"><svg width="12" height="12">
+            <use href="#icon-circle-check" />
+          </svg> Business Communication Module</div>
+        <h1 class="hero-title" style="max-width:560px;margin:0 auto 16px">Small Talk<br>to <em>Business</em></h1>
+        <p class="hero-sub" style="margin:0 auto 12px">Move naturally from friendly opening into the business
+          conversation.</p>
+        <p class="hero-body" style="margin:0 auto 36px">Build the language and confidence to start professional
+          conversations warmly, manage brief small talk, and transition into the real purpose of a call or meeting
+          &#8212; without sounding abrupt, awkward, or overly chatty.</p>
+        <div class="flow-visual">
+          <div class="flow-step">
+            <div class="flow-pill">Open</div><span class="flow-arrow">&#8594;</span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-pill">Exchange</div><span class="flow-arrow">&#8594;</span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-pill hl">Bridge</div><span class="flow-arrow">&#8594;</span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-pill">Purpose</div><span class="flow-arrow">&#8594;</span>
+          </div>
+          <div class="flow-step">
+            <div class="flow-pill teal">Continue</div>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="goToPage(2)">Start Module <svg width="16" height="16" viewBox="0 0 16 16"
+            fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></button>
+        <div style="margin-top:28px;font-size:13px;color:var(--muted)">3&#8211;5 lessons &nbsp;&middot;&nbsp; 17 pages
+          &nbsp;&middot;&nbsp; Skill-based workspace</div>
+      </div>
+    </div>
+
+    <!-- PAGE 2 ─ MODULE OVERVIEW ──────────────────────────────── -->
+    <div class="page" id="page-2">
+      <div class="page-eyebrow">Module Overview</div>
+      <h1 class="page-title">What This Module Builds</h1>
+      <p class="page-subtitle">Small talk becomes easier when you treat it as a short bridge, not the whole
+        conversation.</p>
+      <div class="two-col mt-8">
+        <div>
+          <div class="card">
+            <div class="section-label mb-8">In this module</div>
+            <p style="font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:14px">We&#8217;ll practise how to
+              open warmly, exchange light rapport, choose safe professional topics, bridge into business, state the
+              purpose clearly, and continue into the first question or agenda item.</p>
+            <p style="font-size:14px;color:var(--muted);line-height:1.65">The goal is not to become more talkative. The
+              goal is to start naturally and guide the conversation into business with confidence.</p>
+          </div>
+          <div class="card card-navy mt-12">
+            <div class="section-label on-dark">Typical path</div>
+            <div style="font-size:22px;font-weight:700;color:white;margin-bottom:4px">3&#8211;5 lessons</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.55)">Depending on how confident the student feels with
+              live openings, short rapport, and transitions into business.</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section-label mb-8">You&#8217;ll build</div>
+          <ul class="build-list">
+            <li>
+              <div class="build-dot"><svg width="10" height="10" style="color:#2D8F87">
+                  <use href="#icon-check" />
+                </svg></div>Warmer call and meeting openings
+            </li>
+            <li>
+              <div class="build-dot"><svg width="10" height="10" style="color:#2D8F87">
+                  <use href="#icon-check" />
+                </svg></div>Safer small talk topic choices
+            </li>
+            <li>
+              <div class="build-dot"><svg width="10" height="10" style="color:#2D8F87">
+                  <use href="#icon-check" />
+                </svg></div>More natural responses to &#8220;How are you?&#8221;
+            </li>
+            <li>
+              <div class="build-dot"><svg width="10" height="10" style="color:#2D8F87">
+                  <use href="#icon-check" />
+                </svg></div>Better handling of short answers
+            </li>
+            <li>
+              <div class="build-dot"><svg width="10" height="10" style="color:#2D8F87">
+                  <use href="#icon-check" />
+                </svg></div>Less awkward silence at the start of calls
+            </li>
+            <li>
+              <div class="build-dot"><svg width="10" height="10" style="color:#2D8F87">
+                  <use href="#icon-check" />
+                </svg></div>Clearer transition phrases
+            </li>
+            <li>
+              <div class="build-dot"><svg width="10" height="10" style="color:#2D8F87">
+                  <use href="#icon-check" />
+                </svg></div>More confident purpose-setting language
+            </li>
+            <li>
+              <div class="build-dot"><svg width="10" height="10" style="color:#2D8F87">
+                  <use href="#icon-check" />
+                </svg></div>Smoother discovery and client call openings
+            </li>
+            <li>
+              <div class="build-dot"><svg width="10" height="10" style="color:#2D8F87">
+                  <use href="#icon-check" />
+                </svg></div>Better control when small talk runs too long
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="study-tools">
+        <div class="study-tools-label">Study Tools</div>
+        <div class="study-tools-grid">
+          <div class="study-tool-card">
+            <div class="study-tool-header">
+              <div class="study-tool-icon">
+                <svg width="20" height="20">
+                  <use href="#icon-podcast" />
+                </svg>
+              </div>
+              <div>
+                <div class="study-tool-kicker">Podcast · Deep Dive</div>
+                <div class="study-tool-title">How to Start Business Meetings Naturally</div>
+              </div>
+            </div>
+            <div class="study-tool-desc">A hosted audio walkthrough of the small-talk-to-business framework using client
+              call openings, awkward silence, short answers, and transition moments as examples. Good before or after a
+              session.</div>
+            <audio class="study-tool-audio" controls preload="metadata">
+              <source src="small-talk-to-business-audio-overview.m4a" type="audio/mp4">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div class="study-tool-card">
+            <div class="study-tool-header">
+              <div class="study-tool-icon">
+                <svg width="20" height="20">
+                  <use href="#icon-mindmap" />
+                </svg>
+              </div>
+              <div>
+                <div class="study-tool-kicker">Mind Map · Framework Overview</div>
+                <div class="study-tool-title">Small Talk to Business Framework at a Glance</div>
+              </div>
+            </div>
+            <div class="study-tool-desc">An interactive visual map of the five transition steps, safe topic helper, key
+              phrases, weak patterns, stronger moves, and practice challenges.</div>
+            <a class="study-tool-link"
+              href="https://notebooklm.google.com/notebook/9f4fe727-989f-409c-84c6-c9ca928ae413/artifact/77b38e2a-8386-4bfb-b007-16f79540e8b8?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_"
+              target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                <path
+                  d="M5 2H2.5A1.5 1.5 0 0 0 1 3.5v7A1.5 1.5 0 0 0 2.5 12h7A1.5 1.5 0 0 0 11 10.5V8M8 1h4m0 0v4m0-4L5.5 7.5"
+                  stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              Open Mind Map
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 3 ─ SKILL PATH ────────────────────────────────────── -->
+    <div class="page" id="page-3">
+      <div class="page-eyebrow">Skill Path</div>
+      <h1 class="page-title">Small talk becomes easier when the path is clear.</h1>
+      <p class="page-subtitle">You do not need perfect social English to start well. You need a warm opening, a short
+        exchange, and a clear way into the business conversation.</p>
+      <div class="skill-stack mt-8">
+        <div class="skill-stack-item">
+          <div class="skill-num">1</div>
+          <div>
+            <div class="skill-stack-title">Open warmly</div>
+            <div class="skill-stack-desc">Start with a friendly but professional first line.</div>
+          </div>
+        </div>
+        <div class="skill-stack-item">
+          <div class="skill-num">2</div>
+          <div>
+            <div class="skill-stack-title">Exchange lightly</div>
+            <div class="skill-stack-desc">Handle one or two lines of small talk without overthinking or overextending
+              it.</div>
+          </div>
+        </div>
+        <div class="skill-stack-item">
+          <div class="skill-num">3</div>
+          <div>
+            <div class="skill-stack-title">Bridge into business</div>
+            <div class="skill-stack-desc">Signal that the conversation is moving from rapport into the business topic.
+            </div>
+          </div>
+        </div>
+        <div class="skill-stack-item">
+          <div class="skill-num">4</div>
+          <div>
+            <div class="skill-stack-title">State the purpose</div>
+            <div class="skill-stack-desc">Explain clearly what the conversation is about.</div>
+          </div>
+        </div>
+        <div class="skill-stack-item">
+          <div class="skill-num teal">5</div>
+          <div>
+            <div class="skill-stack-title">Continue smoothly</div>
+            <div class="skill-stack-desc">Move into the first question, agenda item, or next step.</div>
+          </div>
+        </div>
+      </div>
+      <div class="optional-q mt-20">
+        <div class="optional-q-label">Optional &#8212; quick question</div>
+        <div class="optional-q-text">Which part feels hardest: starting warmly, choosing a topic, responding naturally,
+          ending small talk, stating the purpose, or moving into the first question?</div>
+      </div>
+    </div>
+
+    <!-- PAGE 4 ─ CORE FRAMEWORK ───────────────────────────────── -->
+    <div class="page" id="page-4">
+      <div class="page-eyebrow">Core Framework</div>
+      <h1 class="page-title">The Small Talk to Business Framework</h1>
+      <p class="page-subtitle">This framework helps you start warmly, keep rapport short, and move into business without
+        sounding abrupt.</p>
+      <div class="framework-steps">
+        <div class="fw-step">
+          <div class="fw-num">1</div>
+          <div>
+            <div class="fw-label">Open</div>
+            <div class="fw-title">Start warmly and professionally.</div>
+            <div class="fw-phrase">&#8220;Hi Maria, good to see you.&#8221;</div>
+          </div>
+        </div>
+        <div class="fw-step">
+          <div class="fw-num">2</div>
+          <div>
+            <div class="fw-label">Exchange</div>
+            <div class="fw-title">Share one or two light lines.</div>
+            <div class="fw-phrase">&#8220;How has your week been so far?&#8221;</div>
+          </div>
+        </div>
+        <div class="fw-step">
+          <div class="fw-num">3</div>
+          <div>
+            <div class="fw-label">Bridge</div>
+            <div class="fw-title">Move out of small talk.</div>
+            <div class="fw-phrase">&#8220;Shall we get started?&#8221;</div>
+          </div>
+        </div>
+        <div class="fw-step">
+          <div class="fw-num">4</div>
+          <div>
+            <div class="fw-label">Purpose</div>
+            <div class="fw-title">State the reason for the conversation.</div>
+            <div class="fw-phrase">&#8220;The main thing I&#8217;d like to cover today is&#8230;&#8221;</div>
+          </div>
+        </div>
+        <div class="fw-step">
+          <div class="fw-num teal">5</div>
+          <div>
+            <div class="fw-label">Continue</div>
+            <div class="fw-title">Move into the first business step.</div>
+            <div class="fw-phrase">&#8220;To start, could you tell me&#8230;&#8221;</div>
+          </div>
+        </div>
+      </div>
+      <div class="optional-q mt-16">
+        <div class="optional-q-label">Framework note</div>
+        <div class="optional-q-text">Small talk should make the conversation easier to begin, not harder to control.
+        </div>
+      </div>
+      <div class="memory-bar mt-16">
+        <span class="memory-bar-label">Remember</span>
+        <span class="memory-pill">Open</span><span class="memory-arrow">&#8594;</span>
+        <span class="memory-pill">Exchange</span><span class="memory-arrow">&#8594;</span>
+        <span class="memory-pill">Bridge</span><span class="memory-arrow">&#8594;</span>
+        <span class="memory-pill">Purpose</span><span class="memory-arrow">&#8594;</span>
+        <span class="memory-pill">Continue</span>
+      </div>
+      <div class="mini-example mt-16">
+        <div class="mini-example-label">Mini Example &#8212; First Discovery Call</div>
+        <div class="client-label">Client</div>
+        <div class="client-quote">&#8220;Hi, nice to meet you.&#8221;</div>
+        <div class="client-label mt-12">Student <span
+            style="font-weight:400;color:var(--teal);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;margin-left:6px">Open
+            + Exchange</span></div>
+        <div class="client-quote" style="border-left-color:var(--teal)">&#8220;Hi Sofia, nice to meet you too. Thanks
+          for making the time today. How has your week been so far?&#8221;</div>
+        <div class="client-label mt-12">Client</div>
+        <div class="client-quote">&#8220;Pretty good, thanks. Busy morning, but all fine.&#8221;</div>
+        <div class="client-label mt-12">Student <span
+            style="font-weight:400;color:var(--teal);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;margin-left:6px">Bridge
+            + Purpose + Continue</span></div>
+        <div class="client-quote" style="border-left-color:var(--teal)">&#8220;Great. Shall we get started? The main
+          thing I&#8217;d like to understand today is your onboarding process and where the current delays are
+          happening. To start, could you walk me through what happens after a new client signs?&#8221;</div>
+      </div>
+      <div class="optional-q mt-16">
+        <div class="optional-q-label">Optional &#8212; quick question</div>
+        <div class="optional-q-text">Which step do you usually skip or rush?</div>
+      </div>
+    </div>
+
+    <!-- PAGE 5 ─ SAFE TOPIC AND TRANSITION MAP ─────────────────── -->
+    <div class="page" id="page-5">
+      <div class="page-eyebrow">Topic &amp; Transition Map</div>
+      <h1 class="page-title">Safe Small Talk Before Business</h1>
+      <p class="page-subtitle">Good professional small talk is usually short, safe, and easy to leave. Use Work &#8594;
+        Context &#8594; Interests &#8594; Direction as a light topic helper &#8212; not the main framework.</p>
+      <p class="tap-hint">Tap a card to expand it.</p>
+      <div class="topic-grid">
+        <div class="topic-card" onclick="toggleTopic(this)">
+          <div class="topic-type">1. Work</div>
+          <div class="topic-example">&#8220;How has the project been going this week?&#8221;</div>
+          <div class="topic-meta"><strong>Best for:</strong> returning clients, colleagues, project conversations</div>
+          <div class="topic-detail">Use the current work context as a light opener. Stay on the surface &#8212; this is
+            rapport, not the full business discussion.<br><span class="topic-move">Bridge: &#8220;That&#8217;s useful
+              context. Shall we look at today&#8217;s main point?&#8221;</span></div>
+        </div>
+        <div class="topic-card" onclick="toggleTopic(this)">
+          <div class="topic-type">2. Context</div>
+          <div class="topic-example">&#8220;Are you joining from the office today?&#8221;</div>
+          <div class="topic-meta"><strong>Best for:</strong> Zoom calls, international calls, first meetings</div>
+          <div class="topic-detail">Use the situation around the call &#8212; location, time zone, setup. Keep it brief.
+            Logistics are a bridge, not a topic.<br><span class="topic-move">Bridge: &#8220;Great. Thanks again for
+              joining. Shall we get started?&#8221;</span></div>
+        </div>
+        <div class="topic-card" onclick="toggleTopic(this)">
+          <div class="topic-type">3. Interests</div>
+          <div class="topic-example">&#8220;Did you manage to get some time off over the weekend?&#8221;</div>
+          <div class="topic-meta"><strong>Best for:</strong> warmer relationships, recurring calls, relaxed openings
+          </div>
+          <div class="topic-detail">Use light, non-personal human topics. Avoid anything that feels private, political,
+            sensitive, or culturally loaded.<br><span class="topic-move">Bridge: &#8220;Sounds good. Let&#8217;s move
+              into the reason for today&#8217;s call.&#8221;</span></div>
+        </div>
+        <div class="topic-card" onclick="toggleTopic(this)">
+          <div class="topic-type">4. Direction</div>
+          <div class="topic-example">&#8220;What are you hoping to focus on today?&#8221;</div>
+          <div class="topic-meta"><strong>Best for:</strong> discovery calls, consultations, first meetings</div>
+          <div class="topic-detail">Use a forward-looking work focus. This can shift into business quickly &#8212; use
+            it when you are ready to transition.<br><span class="topic-move">Bridge: &#8220;That&#8217;s helpful.
+              Let&#8217;s start there.&#8221;</span></div>
+        </div>
+      </div>
+      <div class="section-label mt-24 mb-8">Common Weak Patterns to Reduce</div>
+      <div class="weak-pattern-grid">
+        <div class="weak-pattern-card">
+          <div class="weak-pattern-title">Abrupt Jump</div>
+          <div class="weak-pattern-weak">&#8220;Hello. Let&#8217;s start.&#8221;</div>
+          <div class="weak-pattern-better"><strong>Better:</strong> &#8220;Hi Daniel, good to see you. Shall we get
+            started?&#8221;</div>
+        </div>
+        <div class="weak-pattern-card">
+          <div class="weak-pattern-title">Endless Small Talk</div>
+          <div class="weak-pattern-weak">Keeps asking questions because they do not know how to transition.</div>
+          <div class="weak-pattern-better"><strong>Better:</strong> &#8220;Great. Let&#8217;s move into the main topic
+            for today.&#8221;</div>
+        </div>
+        <div class="weak-pattern-card">
+          <div class="weak-pattern-title">Too Personal</div>
+          <div class="weak-pattern-weak">Asking about family, relationships, salary, politics, religion, or health too
+            early.</div>
+          <div class="weak-pattern-better"><strong>Better:</strong> Use work, context, light interests, or direction.
+          </div>
+        </div>
+        <div class="weak-pattern-card">
+          <div class="weak-pattern-title">No Bridge</div>
+          <div class="weak-pattern-weak">&#8220;How was your weekend? Okay, the project&#8230;&#8221;</div>
+          <div class="weak-pattern-better"><strong>Better:</strong> &#8220;Sounds good. Shall we move into the
+            project?&#8221;</div>
+        </div>
+        <div class="weak-pattern-card">
+          <div class="weak-pattern-title">Fake Enthusiasm</div>
+          <div class="weak-pattern-weak">&#8220;Wow, amazing, fantastic, incredible!&#8221;</div>
+          <div class="weak-pattern-better"><strong>Better:</strong> &#8220;Nice, that sounds good.&#8221;</div>
+        </div>
+        <div class="weak-pattern-card">
+          <div class="weak-pattern-title">Awkward Silence</div>
+          <div class="weak-pattern-weak">The student waits for the other person to lead.</div>
+          <div class="weak-pattern-better"><strong>Better:</strong> &#8220;Great. Shall we get started?&#8221;</div>
+        </div>
+      </div>
+      <div class="optional-q mt-16">
+        <div class="optional-q-label">Optional &#8212; quick questions</div>
+        <div class="optional-q-text">Which topic feels safest in your real calls? &nbsp;&middot;&nbsp; Which weak
+          pattern do you notice most in yourself?</div>
+      </div>
+    </div>
+
+    <!-- PAGE 6 ─ SKILL 1: OPEN WARMLY ──────────────────────────── -->
+    <div class="page" id="page-6">
+      <div class="skill-hero">
+        <div class="skill-number-badge">Skill 1 of 5</div>
+        <h1 class="skill-title">Open Warmly</h1>
+        <div class="skill-key-move">Key Move: <span class="key-move-hl">Start the conversation in a friendly but
+            professional way.</span></div>
+      </div>
+      <div class="two-col">
+        <div>
+          <div class="info-block">
+            <div class="info-block-label">Why this matters</div>
+            <div class="info-block-text">The opening sets the tone. If the student starts too formally, the call may
+              feel stiff. If they start too casually, it may feel unprofessional. If they jump straight into business,
+              it may feel abrupt. A warm opening creates comfort before direction.</div>
+          </div>
+          <div class="principle-block">
+            <div class="principle-icon"><svg width="14" height="14" style="color:#C8843A">
+                <use href="#icon-bulb" />
+              </svg></div>
+            <div class="principle-text">Start human, then guide.</div>
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-block-label">Useful language</div>
+          <div class="phrase-chips">
+            <div class="phrase-chip">&#8220;Hi Maria, good to see you.&#8221;</div>
+            <div class="phrase-chip">&#8220;Hi Daniel, thanks for joining.&#8221;</div>
+            <div class="phrase-chip">&#8220;Good to speak with you again.&#8221;</div>
+            <div class="phrase-chip">&#8220;Nice to meet you properly.&#8221;</div>
+            <div class="phrase-chip">&#8220;Thanks for making the time today.&#8221;</div>
+          </div>
+        </div>
+      </div>
+      <div class="info-block mt-14">
+        <div class="info-block-label">Weak &#8594; Stronger</div>
+        <div class="ws-grid">
+          <div class="ws-card weak">
+            <div class="ws-tag">Weak</div>
+            <div class="ws-text">&#8220;Hello. We start now?&#8221;</div>
+          </div>
+          <div class="ws-card strong">
+            <div class="ws-tag">Stronger</div>
+            <div class="ws-text">&#8220;Hi Daniel, good to see you. Thanks for making the time today.&#8221;</div>
+          </div>
+        </div>
+      </div>
+      <div class="full-example">
+        <div class="full-example-toggle" onclick="toggleFullExample(this)">
+          <div>
+            <div class="toggle-label">See it in action</div>
+            <div class="toggle-sub">A new client joins a Zoom call.</div>
+          </div>
+          <div class="toggle-chevron"><svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 5l4 4 4-4" stroke="#6B7280" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+        </div>
+        <div class="full-example-body">
+          <div class="client-label">Context</div>
+          <div class="client-quote">A new client joins a first Zoom call.</div>
+          <div class="client-label">Model response</div>
+          <div class="response-text">&#8220;Hi Sofia, nice to meet you properly. Thanks for making the time
+            today.&#8221;</div>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-tabs">
+          <div class="practice-tab active" onclick="switchTab(this,'p6-c')">Controlled</div>
+          <div class="practice-tab" onclick="switchTab(this,'p6-a')">Applied</div>
+          <div class="practice-tab" onclick="switchTab(this,'p6-r')">Make It More Realistic</div>
+        </div>
+        <div class="practice-pane active" id="p6-c">
+          <div class="practice-card">
+            <div class="practice-prompt">Start a call with one warm opening line.</div>
+            <div class="practice-task"><strong>Task:</strong> Use the person&#8217;s name and one professional warmth
+              phrase.</div>
+          </div>
+        </div>
+        <div class="practice-pane" id="p6-a">
+          <div class="practice-card">
+            <div class="practice-prompt">A new client joins a first call.</div>
+            <div class="practice-task"><strong>Task:</strong> Open warmly without sounding too casual or too formal.
+            </div>
+          </div>
+        </div>
+        <div class="practice-pane" id="p6-r">
+          <div class="practice-card">
+            <div class="practice-prompt">The client joins late.</div>
+            <div class="practice-task"><strong>Challenge:</strong> Stay warm without making the late arrival awkward.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="quick-recap">
+        <div class="recap-icon"><svg width="14" height="14" style="color:white">
+            <use href="#icon-target" />
+          </svg></div>
+        <div>
+          <div class="recap-label">Quick Recap</div>
+          <div class="recap-text">A warm opening makes the business conversation easier to begin.</div>
+          <div class="recap-phrase">&#8220;Thanks for making the time today.&#8221;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 7 ─ SKILL 2: EXCHANGE LIGHTLY ─────────────────────── -->
+    <div class="page" id="page-7">
+      <div class="skill-hero">
+        <div class="skill-number-badge">Skill 2 of 5</div>
+        <h1 class="skill-title">Exchange Lightly</h1>
+        <div class="skill-key-move">Key Move: <span class="key-move-hl">Handle one or two lines of safe small talk
+            without overthinking or overextending it.</span></div>
+      </div>
+      <div class="two-col">
+        <div>
+          <div class="info-block">
+            <div class="info-block-label">Why this matters</div>
+            <div class="info-block-text">Many students treat small talk as a performance. They worry about saying
+              something clever, asking the right question, or keeping the conversation going. In business, the exchange
+              can be short. One natural question and one natural response is often enough.</div>
+          </div>
+          <div class="principle-block">
+            <div class="principle-icon"><svg width="14" height="14" style="color:#C8843A">
+                <use href="#icon-bulb" />
+              </svg></div>
+            <div class="principle-text">Small talk can be short and still work.</div>
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-block-label">Useful language</div>
+          <div class="phrase-chips">
+            <div class="phrase-chip">&#8220;How has your week been so far?&#8221;</div>
+            <div class="phrase-chip">&#8220;How&#8217;s your day going?&#8221;</div>
+            <div class="phrase-chip">&#8220;Are you joining from the office today?&#8221;</div>
+            <div class="phrase-chip">&#8220;Did you have a good weekend?&#8221;</div>
+            <div class="phrase-chip">&#8220;Sounds good.&#8221;</div>
+            <div class="phrase-chip">&#8220;Nice, that must have been useful.&#8221;</div>
+          </div>
+        </div>
+      </div>
+      <div class="info-block mt-14">
+        <div class="info-block-label">Weak &#8594; Stronger</div>
+        <div class="ws-grid">
+          <div class="ws-card weak">
+            <div class="ws-tag">Weak</div>
+            <div class="ws-text">&#8220;How are you?&#8221; &#8212; &#8220;Fine.&#8221; &#8212; &#8220;Okay.&#8221;
+            </div>
+          </div>
+          <div class="ws-card strong">
+            <div class="ws-tag">Stronger</div>
+            <div class="ws-text">&#8220;How has your week been so far?&#8221; &#8212; &#8220;Busy, but good.&#8221;
+              &#8212; &#8220;Sounds like a full week. Thanks again for making the time today.&#8221;</div>
+          </div>
+        </div>
+      </div>
+      <div class="full-example">
+        <div class="full-example-toggle" onclick="toggleFullExample(this)">
+          <div>
+            <div class="toggle-label">See it in action</div>
+            <div class="toggle-sub">A client says they have had a busy week.</div>
+          </div>
+          <div class="toggle-chevron"><svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 5l4 4 4-4" stroke="#6B7280" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+        </div>
+        <div class="full-example-body">
+          <div class="client-label">Client</div>
+          <div class="client-quote">&#8220;Busy week, but all good.&#8221;</div>
+          <div class="client-label">Model response</div>
+          <div class="response-text">&#8220;Sounds like a full week. I appreciate you making time for this.&#8221;</div>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-tabs">
+          <div class="practice-tab active" onclick="switchTab(this,'p7-c')">Controlled</div>
+          <div class="practice-tab" onclick="switchTab(this,'p7-a')">Applied</div>
+          <div class="practice-tab" onclick="switchTab(this,'p7-r')">Make It More Realistic</div>
+        </div>
+        <div class="practice-pane active" id="p7-c">
+          <div class="practice-card">
+            <div class="practice-prompt">Respond naturally to one small-talk answer.</div>
+            <div class="practice-task"><strong>Task:</strong> Use one short response before moving on.</div>
+          </div>
+        </div>
+        <div class="practice-pane" id="p7-a">
+          <div class="practice-card">
+            <div class="practice-prompt">The other person gives a short answer or says they are busy.</div>
+            <div class="practice-task"><strong>Task:</strong> Respond naturally without forcing more conversation.</div>
+          </div>
+        </div>
+        <div class="practice-pane" id="p7-r">
+          <div class="practice-card">
+            <div class="practice-prompt">The other person gives only a one-word answer.</div>
+            <div class="practice-task"><strong>Challenge:</strong> Acknowledge it and move forward smoothly.</div>
+          </div>
+        </div>
+      </div>
+      <div class="quick-recap">
+        <div class="recap-icon"><svg width="14" height="14" style="color:white">
+            <use href="#icon-target" />
+          </svg></div>
+        <div>
+          <div class="recap-label">Quick Recap</div>
+          <div class="recap-text">Small talk does not need to be long to be effective.</div>
+          <div class="recap-phrase">&#8220;Sounds like a full week.&#8221;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 8 ─ SKILL 3: BRIDGE INTO BUSINESS ─────────────────── -->
+    <div class="page" id="page-8">
+      <div class="skill-hero">
+        <div class="skill-number-badge">Skill 3 of 5</div>
+        <h1 class="skill-title">Bridge Into Business</h1>
+        <div class="skill-key-move">Key Move: <span class="key-move-hl">Signal that the conversation is moving from
+            rapport into the business topic.</span></div>
+      </div>
+      <div class="two-col">
+        <div>
+          <div class="info-block">
+            <div class="info-block-label">Why this matters</div>
+            <div class="info-block-text">This is the main pain point. Students often know how to say hello, but they do
+              not know how to leave the friendly opening. Without a bridge, the transition can sound abrupt, awkward, or
+              mechanical. A bridge phrase makes the movement feel natural and intentional.</div>
+          </div>
+          <div class="principle-block">
+            <div class="principle-icon"><svg width="14" height="14" style="color:#C8843A">
+                <use href="#icon-bulb" />
+              </svg></div>
+            <div class="principle-text">Do not jump. Bridge.</div>
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-block-label">Useful language</div>
+          <div class="phrase-chips">
+            <div class="phrase-chip">&#8220;Shall we get started?&#8221;</div>
+            <div class="phrase-chip">&#8220;Shall we move into the main topic?&#8221;</div>
+            <div class="phrase-chip">&#8220;Let&#8217;s look at what we wanted to cover today.&#8221;</div>
+            <div class="phrase-chip">&#8220;Maybe we can start with the main question for today.&#8221;</div>
+            <div class="phrase-chip">&#8220;Great. Let&#8217;s move into the reason for the call.&#8221;</div>
+          </div>
+        </div>
+      </div>
+      <div class="info-block mt-14">
+        <div class="info-block-label">Weak &#8594; Stronger</div>
+        <div class="ws-grid">
+          <div class="ws-card weak">
+            <div class="ws-tag">Weak</div>
+            <div class="ws-text">&#8220;Okay. Business.&#8221;</div>
+          </div>
+          <div class="ws-card strong">
+            <div class="ws-tag">Stronger</div>
+            <div class="ws-text">&#8220;Great. Shall we move into the main topic for today?&#8221;</div>
+          </div>
+        </div>
+      </div>
+      <div class="full-example">
+        <div class="full-example-toggle" onclick="toggleFullExample(this)">
+          <div>
+            <div class="toggle-label">See it in action &#8212; Standard Bridge</div>
+            <div class="toggle-sub">Small talk has gone on for one or two lines.</div>
+          </div>
+          <div class="toggle-chevron"><svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 5l4 4 4-4" stroke="#6B7280" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+        </div>
+        <div class="full-example-body">
+          <div class="client-label">Context</div>
+          <div class="client-quote">One or two lines of small talk have passed. The student needs to move into the call.
+          </div>
+          <div class="client-label">Model response</div>
+          <div class="response-text">&#8220;Great. Shall we get started? I&#8217;d like to make sure we cover the main
+            points while we have the time.&#8221;</div>
+        </div>
+      </div>
+      <div class="full-example mt-12">
+        <div class="full-example-toggle" onclick="this.classList.toggle('open')">
+          <div>
+            <div class="toggle-label">See it in action &#8212; Polite Bridge When Someone Keeps Chatting</div>
+            <div class="toggle-sub">The other person is still talking, but you need to move forward.</div>
+          </div>
+          <div class="toggle-chevron"><svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 5l4 4 4-4" stroke="#6B7280" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+        </div>
+        <div class="full-example-body">
+          <div class="client-label">Client</div>
+          <div class="client-quote">&#8220;&#8230; and then we had the whole team away for two days, which was
+            exhausting but good&#8230;&#8221;</div>
+          <div class="client-label">Model response</div>
+          <div class="response-text">&#8220;That sounds like a full week. I know we have limited time, so shall we move
+            into today&#8217;s main topic?&#8221;</div>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-tabs">
+          <div class="practice-tab active" onclick="switchTab(this,'p8-c')">Controlled</div>
+          <div class="practice-tab" onclick="switchTab(this,'p8-a')">Applied</div>
+          <div class="practice-tab" onclick="switchTab(this,'p8-r')">Make It More Realistic</div>
+        </div>
+        <div class="practice-pane active" id="p8-c">
+          <div class="practice-card">
+            <div class="practice-prompt">Move from one small-talk line into business.</div>
+            <div class="practice-task"><strong>Task:</strong> Use one bridge phrase.</div>
+          </div>
+        </div>
+        <div class="practice-pane" id="p8-a">
+          <div class="practice-card">
+            <div class="practice-prompt">The conversation starts warmly but needs direction.</div>
+            <div class="practice-task"><strong>Task:</strong> End small talk and move toward the business topic.</div>
+          </div>
+        </div>
+        <div class="practice-pane" id="p8-r">
+          <div class="practice-card">
+            <div class="practice-prompt">The other person keeps chatting.</div>
+            <div class="practice-task"><strong>Challenge:</strong> Bridge politely without sounding rude.</div>
+          </div>
+        </div>
+      </div>
+      <div class="quick-recap">
+        <div class="recap-icon"><svg width="14" height="14" style="color:white">
+            <use href="#icon-target" />
+          </svg></div>
+        <div>
+          <div class="recap-label">Quick Recap</div>
+          <div class="recap-text">A bridge phrase makes the transition feel intentional, not abrupt.</div>
+          <div class="recap-phrase">&#8220;Shall we get started?&#8221;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 9 ─ SKILL 4: STATE THE PURPOSE ────────────────────── -->
+    <div class="page" id="page-9">
+      <div class="skill-hero">
+        <div class="skill-number-badge">Skill 4 of 5</div>
+        <h1 class="skill-title">State the Purpose</h1>
+        <div class="skill-key-move">Key Move: <span class="key-move-hl">Explain what the conversation is about in a
+            clear, natural way.</span></div>
+      </div>
+      <div class="two-col">
+        <div>
+          <div class="info-block">
+            <div class="info-block-label">Why this matters</div>
+            <div class="info-block-text">After the bridge, the student needs to give direction. If they move into
+              business without a purpose, the conversation can still feel vague. A clear purpose helps the other person
+              understand why the meeting is happening and what to expect.</div>
+          </div>
+          <div class="principle-block">
+            <div class="principle-icon"><svg width="14" height="14" style="color:#C8843A">
+                <use href="#icon-bulb" />
+              </svg></div>
+            <div class="principle-text">After the bridge, give direction.</div>
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-block-label">Useful language</div>
+          <div class="phrase-chips">
+            <div class="phrase-chip">&#8220;The main thing I&#8217;d like to cover today is&#8230;&#8221;</div>
+            <div class="phrase-chip">&#8220;The goal for today is&#8230;&#8221;</div>
+            <div class="phrase-chip">&#8220;I&#8217;d like to use this time to&#8230;&#8221;</div>
+            <div class="phrase-chip">&#8220;What I&#8217;d like to understand today is&#8230;&#8221;</div>
+            <div class="phrase-chip">&#8220;It would be useful to focus on&#8230;&#8221;</div>
+          </div>
+        </div>
+      </div>
+      <div class="info-block mt-14">
+        <div class="info-block-label">Weak &#8594; Stronger</div>
+        <div class="ws-grid">
+          <div class="ws-card weak">
+            <div class="ws-tag">Weak</div>
+            <div class="ws-text">&#8220;So, about your company&#8230;&#8221;</div>
+          </div>
+          <div class="ws-card strong">
+            <div class="ws-tag">Stronger</div>
+            <div class="ws-text">&#8220;The main thing I&#8217;d like to understand today is how your team currently
+              handles onboarding.&#8221;</div>
+          </div>
+        </div>
+      </div>
+      <div class="full-example">
+        <div class="full-example-toggle" onclick="toggleFullExample(this)">
+          <div>
+            <div class="toggle-label">See it in action</div>
+            <div class="toggle-sub">Opening a discovery call.</div>
+          </div>
+          <div class="toggle-chevron"><svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 5l4 4 4-4" stroke="#6B7280" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+        </div>
+        <div class="full-example-body">
+          <div class="client-label">Context</div>
+          <div class="client-quote">The student is opening a discovery call after the bridge.</div>
+          <div class="client-label">Model response</div>
+          <div class="response-text">&#8220;The goal for today is to understand your current process, where the delays
+            are happening, and whether there is a useful next step.&#8221;</div>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-tabs">
+          <div class="practice-tab active" onclick="switchTab(this,'p9-c')">Controlled</div>
+          <div class="practice-tab" onclick="switchTab(this,'p9-a')">Applied</div>
+          <div class="practice-tab" onclick="switchTab(this,'p9-r')">Make It More Realistic</div>
+        </div>
+        <div class="practice-pane active" id="p9-c">
+          <div class="practice-card">
+            <div class="practice-prompt">State the purpose of a call in one sentence.</div>
+            <div class="practice-task"><strong>Task:</strong> Use &#8220;The goal for today is&#8230;&#8221;</div>
+          </div>
+        </div>
+        <div class="practice-pane" id="p9-a">
+          <div class="practice-card">
+            <div class="practice-prompt">You are starting a client, discovery, or follow-up call.</div>
+            <div class="practice-task"><strong>Task:</strong> State the purpose clearly after the bridge.</div>
+          </div>
+        </div>
+        <div class="practice-pane" id="p9-r">
+          <div class="practice-card">
+            <div class="practice-prompt">The listener is busy and has limited time.</div>
+            <div class="practice-task"><strong>Challenge:</strong> State the purpose in one short sentence.</div>
+          </div>
+        </div>
+      </div>
+      <div class="quick-recap">
+        <div class="recap-icon"><svg width="14" height="14" style="color:white">
+            <use href="#icon-target" />
+          </svg></div>
+        <div>
+          <div class="recap-label">Quick Recap</div>
+          <div class="recap-text">A clear purpose gives the conversation direction.</div>
+          <div class="recap-phrase">&#8220;The goal for today is&#8230;&#8221;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 10 ─ SKILL 5: CONTINUE SMOOTHLY ───────────────────── -->
+    <div class="page" id="page-10">
+      <div class="skill-hero">
+        <div class="skill-number-badge">Skill 5 of 5</div>
+        <h1 class="skill-title">Continue Smoothly</h1>
+        <div class="skill-key-move">Key Move: <span class="key-move-hl">Move into the first question, agenda item, or
+            next step without sounding mechanical.</span></div>
+      </div>
+      <div class="two-col">
+        <div>
+          <div class="info-block">
+            <div class="info-block-label">Why this matters</div>
+            <div class="info-block-text">Many students manage the transition but then restart awkwardly. They say the
+              purpose, pause, and do not know what comes next. Continuing smoothly keeps the conversation moving and
+              makes the student sound prepared and in control.</div>
+          </div>
+          <div class="principle-block">
+            <div class="principle-icon"><svg width="14" height="14" style="color:#C8843A">
+                <use href="#icon-bulb" />
+              </svg></div>
+            <div class="principle-text">Do not stop after the purpose. Continue into the first move.</div>
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-block-label">Useful language</div>
+          <div class="phrase-chips">
+            <div class="phrase-chip">&#8220;To start, could you tell me&#8230;&#8221;</div>
+            <div class="phrase-chip">&#8220;Maybe we can begin with&#8230;&#8221;</div>
+            <div class="phrase-chip">&#8220;The first thing I&#8217;d like to ask is&#8230;&#8221;</div>
+            <div class="phrase-chip">&#8220;Let&#8217;s start with&#8230;&#8221;</div>
+            <div class="phrase-chip">&#8220;Could you walk me through&#8230;&#8221;</div>
+          </div>
+        </div>
+      </div>
+      <div class="info-block mt-14">
+        <div class="info-block-label">Weak &#8594; Stronger</div>
+        <div class="ws-grid">
+          <div class="ws-card weak">
+            <div class="ws-tag">Weak</div>
+            <div class="ws-text">&#8220;The goal today is to discuss your process. So&#8230; yes.&#8221;</div>
+          </div>
+          <div class="ws-card strong">
+            <div class="ws-tag">Stronger</div>
+            <div class="ws-text">&#8220;The goal today is to understand your current process. To start, could you walk
+              me through how it works now?&#8221;</div>
+          </div>
+        </div>
+      </div>
+      <div class="full-example">
+        <div class="full-example-toggle" onclick="toggleFullExample(this)">
+          <div>
+            <div class="toggle-label">See it in action</div>
+            <div class="toggle-sub">The student has stated the purpose and needs the first question.</div>
+          </div>
+          <div class="toggle-chevron"><svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 5l4 4 4-4" stroke="#6B7280" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg></div>
+        </div>
+        <div class="full-example-body">
+          <div class="client-label">Context</div>
+          <div class="client-quote">The student has bridged and stated the purpose of a discovery call.</div>
+          <div class="client-label">Model response</div>
+          <div class="response-text">&#8220;The main thing I&#8217;d like to understand is where the process feels slow.
+            To start, could you walk me through what happens after a new client signs?&#8221;</div>
+        </div>
+      </div>
+      <div class="practice-section">
+        <div class="practice-tabs">
+          <div class="practice-tab active" onclick="switchTab(this,'p10-c')">Controlled</div>
+          <div class="practice-tab" onclick="switchTab(this,'p10-a')">Applied</div>
+          <div class="practice-tab" onclick="switchTab(this,'p10-r')">Make It More Realistic</div>
+        </div>
+        <div class="practice-pane active" id="p10-c">
+          <div class="practice-card">
+            <div class="practice-prompt">Add a first question after the purpose.</div>
+            <div class="practice-task"><strong>Task:</strong> Use &#8220;To start, could you&#8230;&#8221;</div>
+          </div>
+        </div>
+        <div class="practice-pane" id="p10-a">
+          <div class="practice-card">
+            <div class="practice-prompt">Begin a client or internal meeting.</div>
+            <div class="practice-task"><strong>Task:</strong> Open, bridge, state the purpose, and continue into the
+              first useful question.</div>
+          </div>
+        </div>
+        <div class="practice-pane" id="p10-r">
+          <div class="practice-card">
+            <div class="practice-prompt">The other person expects you to lead.</div>
+            <div class="practice-task"><strong>Challenge:</strong> Continue confidently without asking, &#8220;Should I
+              start?&#8221;</div>
+          </div>
+        </div>
+      </div>
+      <div class="quick-recap">
+        <div class="recap-icon"><svg width="14" height="14" style="color:white">
+            <use href="#icon-target" />
+          </svg></div>
+        <div>
+          <div class="recap-label">Quick Recap</div>
+          <div class="recap-text">The first business move should follow naturally from the purpose.</div>
+          <div class="recap-phrase">&#8220;To start, could you&#8230;&#8221;</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 11 ─ PUT IT TOGETHER ──────────────────────────────── -->
+    <div class="page" id="page-11">
+      <div class="page-eyebrow">Integration</div>
+      <h1 class="page-title">Put the Small Talk to Business Framework Together</h1>
+      <p class="page-subtitle">A strong opening should sound warm, include brief rapport, bridge naturally, state the
+        purpose, and continue into the first business move.</p>
+      <div class="memory-bar mt-8">
+        <span class="memory-bar-label">Framework</span>
+        <span class="memory-pill">Open</span><span class="memory-arrow">&#8594;</span>
+        <span class="memory-pill">Exchange</span><span class="memory-arrow">&#8594;</span>
+        <span class="memory-pill">Bridge</span><span class="memory-arrow">&#8594;</span>
+        <span class="memory-pill">Purpose</span><span class="memory-arrow">&#8594;</span>
+        <span class="memory-pill">Continue</span>
+      </div>
+      <div class="two-col mt-16">
+        <div>
+          <div class="section-label mb-8">Full Sequence &#8212; Discovery Call</div>
+          <div class="sequence-steps">
+            <div class="seq-step">
+              <div class="seq-line-col">
+                <div class="seq-dot">1</div>
+                <div class="seq-connector"></div>
+              </div>
+              <div class="seq-content">
+                <div class="seq-label">Open</div>
+                <div class="seq-phrase">&#8220;Hi Sofia, nice to meet you too. Thanks for making the time today.&#8221;
+                </div>
+              </div>
+            </div>
+            <div class="seq-step">
+              <div class="seq-line-col">
+                <div class="seq-dot">2</div>
+                <div class="seq-connector"></div>
+              </div>
+              <div class="seq-content">
+                <div class="seq-label">Exchange</div>
+                <div class="seq-phrase">&#8220;How has your week been so far?&#8221;</div>
+              </div>
+            </div>
+            <div class="seq-step">
+              <div class="seq-line-col">
+                <div class="seq-dot">3</div>
+                <div class="seq-connector"></div>
+              </div>
+              <div class="seq-content">
+                <div class="seq-label">Bridge</div>
+                <div class="seq-phrase">&#8220;Sounds like a busy one. Shall we get started?&#8221;</div>
+              </div>
+            </div>
+            <div class="seq-step">
+              <div class="seq-line-col">
+                <div class="seq-dot">4</div>
+                <div class="seq-connector"></div>
+              </div>
+              <div class="seq-content">
+                <div class="seq-label">Purpose</div>
+                <div class="seq-phrase">&#8220;The main thing I&#8217;d like to understand today is how your team
+                  currently handles onboarding and where the process feels slow.&#8221;</div>
+              </div>
+            </div>
+            <div class="seq-step">
+              <div class="seq-line-col">
+                <div class="seq-dot final">5</div>
+              </div>
+              <div class="seq-content">
+                <div class="seq-label">Continue</div>
+                <div class="seq-phrase">&#8220;To start, could you walk me through what happens after a new client
+                  signs?&#8221;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="section-label mb-8">Choose a prompt to practise</div>
+          <div class="card card-sm">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div class="practice-opt block" onclick="this.classList.toggle('selected')">New client Zoom call</div>
+              <div class="practice-opt block" onclick="this.classList.toggle('selected')">Returning client call</div>
+              <div class="practice-opt block" onclick="this.classList.toggle('selected')">First discovery call</div>
+              <div class="practice-opt block" onclick="this.classList.toggle('selected')">Follow-up call</div>
+              <div class="practice-opt block" onclick="this.classList.toggle('selected')">Internal meeting</div>
+            </div>
+            <div style="margin-top:14px;font-size:13px;color:var(--muted)"><strong
+                style="color:var(--navy)">Task:</strong> Use the full sequence &#8212; open &#8594; exchange &#8594;
+              bridge &#8594; purpose &#8594; continue.</div>
+          </div>
+        </div>
+      </div>
+      <div class="full-example mt-20">
+        <div class="full-example-toggle" onclick="this.classList.toggle('open')">
+          <div>
+            <div class="toggle-label">Full Example &#8212; First Discovery Call</div>
+            <div class="toggle-sub">See all five steps as a realistic turn-by-turn exchange</div>
+          </div>
+          <div class="toggle-chevron"><svg width="14" height="14" style="color:#6B7280">
+              <use href="#icon-chevron-down-sm" />
+            </svg></div>
+        </div>
+        <div class="full-example-body">
+          <div class="client-label">Client</div>
+          <div class="client-quote">&#8220;Hi, nice to meet you.&#8221;</div>
+          <div class="client-label mt-12">Student <span
+              style="font-weight:400;color:var(--teal);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;margin-left:6px">Open
+              + Exchange</span></div>
+          <div class="client-quote" style="border-left-color:var(--teal)">&#8220;Hi Sofia, nice to meet you too. Thanks
+            for making the time today. How has your week been so far?&#8221;</div>
+          <div class="client-label mt-12">Client</div>
+          <div class="client-quote">&#8220;Busy, but good.&#8221;</div>
+          <div class="client-label mt-12">Student <span
+              style="font-weight:400;color:var(--teal);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;margin-left:6px">Bridge
+              + Purpose + Continue</span></div>
+          <div class="client-quote" style="border-left-color:var(--teal)">&#8220;Sounds like a busy one. I appreciate
+            you taking the time. Shall we get started? The main thing I&#8217;d like to understand today is how your
+            team currently handles onboarding and where the process feels slow. To start, could you walk me through what
+            happens after a new client signs?&#8221;</div>
+        </div>
+      </div>
+      <div class="full-example mt-12">
+        <div class="full-example-toggle" onclick="this.classList.toggle('open')">
+          <div>
+            <div class="toggle-label">Shorter Version &#8212; Busy Senior Listener</div>
+            <div class="toggle-sub">Same framework, tighter delivery</div>
+          </div>
+          <div class="toggle-chevron"><svg width="14" height="14" style="color:#6B7280">
+              <use href="#icon-chevron-down-sm" />
+            </svg></div>
+        </div>
+        <div class="full-example-body">
+          <div class="client-label">Model response</div>
+          <div class="response-text">&#8220;Hi Sofia, nice to meet you. Thanks for making the time today. Shall we get
+            started? The goal for today is to understand your current onboarding process and where the delays are
+            happening. To start, could you walk me through the process as it works now?&#8221;</div>
+        </div>
+      </div>
+      <div class="optional-q mt-16">
+        <div class="optional-q-label">Optional &#8212; quick question</div>
+        <div class="optional-q-text">Which part makes this opening feel natural: the warm first line, the short
+          exchange, the bridge, the purpose, or the first question?</div>
+      </div>
+    </div>
+
+    <!-- PAGE 12 ─ LANGUAGE BANK ────────────────────────────────── -->
+    <div class="page" id="page-12">
+      <div class="page-eyebrow">Reference</div>
+      <h1 class="page-title">Language Bank</h1>
+      <p class="page-subtitle">Use this page to find useful opening, transition, and purpose-setting phrases quickly.
+        Tap a group to expand it.</p>
+      <div class="optional-q mt-16">
+        <div class="optional-q-label">Reference note</div>
+        <div class="optional-q-text">Most phrases are practised inside the skill pages. Use this page to find options
+          quickly or review before a real call.</div>
+      </div>
+      <div class="lang-accordion mt-8">
+        <div class="lang-group open">
+          <div class="lang-group-header" onclick="toggleLangGroup(this)">
+            <div><span class="lang-group-title">Warm Openings</span><span class="lang-group-count">5 phrases</span>
+            </div>
+            <svg class="lang-chevron" width="16" height="16" style="color:#6B7280">
+              <use href="#icon-chevron-down" />
+            </svg>
+          </div>
+          <div class="lang-group-body">
+            <div class="lang-phrase-list">
+              <div class="lang-phrase">&#8220;Hi Maria, good to see you.&#8221;</div>
+              <div class="lang-phrase">&#8220;Hi Daniel, thanks for joining.&#8221;</div>
+              <div class="lang-phrase">&#8220;Good to speak with you again.&#8221;</div>
+              <div class="lang-phrase">&#8220;Nice to meet you properly.&#8221;</div>
+              <div class="lang-phrase">&#8220;Thanks for making the time today.&#8221;</div>
+            </div>
+          </div>
+        </div>
+        <div class="lang-group">
+          <div class="lang-group-header" onclick="toggleLangGroup(this)">
+            <div><span class="lang-group-title">Light Small Talk Questions</span><span class="lang-group-count">5
+                phrases</span></div>
+            <svg class="lang-chevron" width="16" height="16" style="color:#6B7280">
+              <use href="#icon-chevron-down" />
+            </svg>
+          </div>
+          <div class="lang-group-body">
+            <div class="lang-phrase-list">
+              <div class="lang-phrase">&#8220;How has your week been so far?&#8221;</div>
+              <div class="lang-phrase">&#8220;How&#8217;s your day going?&#8221;</div>
+              <div class="lang-phrase">&#8220;Are you joining from the office today?&#8221;</div>
+              <div class="lang-phrase">&#8220;Did you have a good weekend?&#8221;</div>
+              <div class="lang-phrase">&#8220;How has the project been going this week?&#8221;</div>
+            </div>
+          </div>
+        </div>
+        <div class="lang-group">
+          <div class="lang-group-header" onclick="toggleLangGroup(this)">
+            <div><span class="lang-group-title">Natural Short Responses</span><span class="lang-group-count">5
+                phrases</span></div>
+            <svg class="lang-chevron" width="16" height="16" style="color:#6B7280">
+              <use href="#icon-chevron-down" />
+            </svg>
+          </div>
+          <div class="lang-group-body">
+            <div class="lang-phrase-list">
+              <div class="lang-phrase">&#8220;Sounds good.&#8221;</div>
+              <div class="lang-phrase">&#8220;Sounds like a busy week.&#8221;</div>
+              <div class="lang-phrase">&#8220;Nice, that must have been useful.&#8221;</div>
+              <div class="lang-phrase">&#8220;I appreciate you making time today.&#8221;</div>
+              <div class="lang-phrase">&#8220;That&#8217;s good to hear.&#8221;</div>
+            </div>
+          </div>
+        </div>
+        <div class="lang-group">
+          <div class="lang-group-header" onclick="toggleLangGroup(this)">
+            <div><span class="lang-group-title">Bridge Phrases</span><span class="lang-group-count">5 phrases</span>
+            </div>
+            <svg class="lang-chevron" width="16" height="16" style="color:#6B7280">
+              <use href="#icon-chevron-down" />
+            </svg>
+          </div>
+          <div class="lang-group-body">
+            <div class="lang-phrase-list">
+              <div class="lang-phrase">&#8220;Shall we get started?&#8221;</div>
+              <div class="lang-phrase">&#8220;Shall we move into the main topic?&#8221;</div>
+              <div class="lang-phrase">&#8220;Let&#8217;s look at what we wanted to cover today.&#8221;</div>
+              <div class="lang-phrase">&#8220;Maybe we can start with the main question for today.&#8221;</div>
+              <div class="lang-phrase">&#8220;Great. Let&#8217;s move into the reason for the call.&#8221;</div>
+            </div>
+          </div>
+        </div>
+        <div class="lang-group">
+          <div class="lang-group-header" onclick="toggleLangGroup(this)">
+            <div><span class="lang-group-title">Purpose Phrases</span><span class="lang-group-count">5 phrases</span>
+            </div>
+            <svg class="lang-chevron" width="16" height="16" style="color:#6B7280">
+              <use href="#icon-chevron-down" />
+            </svg>
+          </div>
+          <div class="lang-group-body">
+            <div class="lang-phrase-list">
+              <div class="lang-phrase">&#8220;The main thing I&#8217;d like to cover today is&#8230;&#8221;</div>
+              <div class="lang-phrase">&#8220;The goal for today is&#8230;&#8221;</div>
+              <div class="lang-phrase">&#8220;I&#8217;d like to use this time to&#8230;&#8221;</div>
+              <div class="lang-phrase">&#8220;What I&#8217;d like to understand today is&#8230;&#8221;</div>
+              <div class="lang-phrase">&#8220;It would be useful to focus on&#8230;&#8221;</div>
+            </div>
+          </div>
+        </div>
+        <div class="lang-group">
+          <div class="lang-group-header" onclick="toggleLangGroup(this)">
+            <div><span class="lang-group-title">Continue Phrases</span><span class="lang-group-count">5 phrases</span>
+            </div>
+            <svg class="lang-chevron" width="16" height="16" style="color:#6B7280">
+              <use href="#icon-chevron-down" />
+            </svg>
+          </div>
+          <div class="lang-group-body">
+            <div class="lang-phrase-list">
+              <div class="lang-phrase">&#8220;To start, could you tell me&#8230;&#8221;</div>
+              <div class="lang-phrase">&#8220;Maybe we can begin with&#8230;&#8221;</div>
+              <div class="lang-phrase">&#8220;The first thing I&#8217;d like to ask is&#8230;&#8221;</div>
+              <div class="lang-phrase">&#8220;Let&#8217;s start with&#8230;&#8221;</div>
+              <div class="lang-phrase">&#8220;Could you walk me through&#8230;&#8221;</div>
+            </div>
+          </div>
+        </div>
+        <div class="lang-group">
+          <div class="lang-group-header" onclick="toggleLangGroup(this)">
+            <div><span class="lang-group-title">Ending Small Talk Politely</span><span class="lang-group-count">5
+                phrases</span></div>
+            <svg class="lang-chevron" width="16" height="16" style="color:#6B7280">
+              <use href="#icon-chevron-down" />
+            </svg>
+          </div>
+          <div class="lang-group-body">
+            <div class="lang-phrase-list">
+              <div class="lang-phrase">&#8220;That sounds good. Shall we get started?&#8221;</div>
+              <div class="lang-phrase">&#8220;Nice. Let&#8217;s move into today&#8217;s main topic.&#8221;</div>
+              <div class="lang-phrase">&#8220;Great. I know we have limited time, so shall we begin?&#8221;</div>
+              <div class="lang-phrase">&#8220;Thanks for sharing that. Let&#8217;s look at the reason for today&#8217;s
+                call.&#8221;</div>
+              <div class="lang-phrase">&#8220;Good to hear. Maybe we can start with&#8230;&#8221;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="optional-q mt-16">
+        <div class="optional-q-label">Optional &#8212; quick question</div>
+        <div class="optional-q-text">Which three phrases would help you most at the start of real calls or meetings?
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 13 ─ PRACTICE PROMPT LIBRARY ──────────────────────── -->
+    <div class="page" id="page-13">
+      <div class="page-eyebrow">Practice</div>
+      <h1 class="page-title">Practice Prompt Library</h1>
+      <p class="page-subtitle">Choose one opening situation and practise one skill or the full framework. Tap a card to
+        open it.</p>
+      <div class="prompt-library mt-8">
+        <div class="prompt-item">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <div>
+              <div class="prompt-title">Prompt 1 &#8212; First Client Call</div>
+              <div class="prompt-quote">You are meeting a client for the first time on Zoom.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4.5 7L9 11.5 13.5 7" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="prompt-body">
+            <p class="prompt-hint">Choose one skill to practise, or use the full framework.</p>
+            <div class="prompt-options">
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">open</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">exchange</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">bridge</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">purpose</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">full opening</div>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-item">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <div>
+              <div class="prompt-title">Prompt 2 &#8212; Returning Client Call</div>
+              <div class="prompt-quote">You spoke last week and are continuing the conversation today.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4.5 7L9 11.5 13.5 7" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="prompt-body">
+            <div class="prompt-options">
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">warm opening</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">work topic</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">bridge</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">next step</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">full opening</div>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-item">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <div>
+              <div class="prompt-title">Prompt 3 &#8212; Discovery Call</div>
+              <div class="prompt-quote">You need to start warmly and then ask about the client&#8217;s current
+                situation.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4.5 7L9 11.5 13.5 7" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="prompt-body">
+            <div class="prompt-options">
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">purpose</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">continue</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">first question</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">full opening</div>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-item">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <div>
+              <div class="prompt-title">Prompt 4 &#8212; Busy Stakeholder</div>
+              <div class="prompt-quote">The other person has limited time.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4.5 7L9 11.5 13.5 7" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="prompt-body">
+            <div class="prompt-options">
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">short opening</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">fast bridge</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">clear purpose</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">first move</div>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-item">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <div>
+              <div class="prompt-title">Prompt 5 &#8212; International Zoom Call</div>
+              <div class="prompt-quote">The person is joining from another location or time zone.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4.5 7L9 11.5 13.5 7" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="prompt-body">
+            <div class="prompt-options">
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">context topic</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">short exchange</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">bridge</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">purpose</div>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-item">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <div>
+              <div class="prompt-title">Prompt 6 &#8212; Awkward Silence</div>
+              <div class="prompt-quote">The call opens and neither person speaks for a moment.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4.5 7L9 11.5 13.5 7" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="prompt-body">
+            <div class="prompt-options">
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">open</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">light topic</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">bridge</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">continue</div>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-item">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <div>
+              <div class="prompt-title">Prompt 7 &#8212; Overlong Small Talk</div>
+              <div class="prompt-quote">The other person keeps chatting, but you need to start the meeting.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4.5 7L9 11.5 13.5 7" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="prompt-body">
+            <div class="prompt-options">
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">acknowledge</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">bridge</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">purpose</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">continue</div>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-item">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <div>
+              <div class="prompt-title">Prompt 8 &#8212; Call After Delay</div>
+              <div class="prompt-quote">The meeting was rescheduled or delayed.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4.5 7L9 11.5 13.5 7" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="prompt-body">
+            <div class="prompt-options">
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">warm acknowledgement</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">bridge</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">purpose</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">next step</div>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-item">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <div>
+              <div class="prompt-title">Prompt 9 &#8212; Internal Meeting</div>
+              <div class="prompt-quote">You are starting a small internal meeting with colleagues.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4.5 7L9 11.5 13.5 7" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="prompt-body">
+            <div class="prompt-options">
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">warm opening</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">short exchange</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">bridge</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">agenda item</div>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-item">
+          <div class="prompt-header" onclick="togglePrompt(this)">
+            <div>
+              <div class="prompt-title">Prompt 10 &#8212; Follow-Up Call</div>
+              <div class="prompt-quote">You are meeting again after sending information or a proposal.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M4.5 7L9 11.5 13.5 7" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="prompt-body">
+            <div class="prompt-options">
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">open</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">refer back</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">bridge</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">purpose</div>
+              <div class="prompt-opt" onclick="this.classList.toggle('selected')">first question</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 14 ─ TRANSITION CHALLENGE BANK ─────────────────────── -->
+    <div class="page" id="page-14">
+      <div class="page-eyebrow amber">Practice Upgrade</div>
+      <h1 class="page-title">Transition Challenge Bank</h1>
+      <p class="page-subtitle">Once the transition is clear, try the same task with one extra difficulty. Add one
+        challenge at a time.</p>
+      <div class="challenge-grid mt-8">
+        <div class="challenge-card" onclick="this.classList.toggle('active')">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 6a5 5 0 0 1 10 0c0 2-1 3.5-2.5 4.5V12H5.5v-1.5C4 9.5 3 8 3 6z" stroke="#C8843A"
+                stroke-width="1.3" fill="none" />
+              <path d="M6 14h4" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round" />
+              <line x1="8" y1="3" x2="8" y2="5" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="challenge-title">Short Answer</div>
+          <div class="challenge-quote">The other person gives a one-word small-talk answer.</div>
+        </div>
+        <div class="challenge-card" onclick="this.classList.toggle('active')">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path
+                d="M6 8V4a1 1 0 0 1 2 0v4M6 8V6a1 1 0 0 0-2 0v3a5 5 0 0 0 5 5h1a4 4 0 0 0 4-4V8a1 1 0 0 0-2 0M6 8a1 1 0 0 1 2 0"
+                stroke="#C8843A" stroke-width="1.3" stroke-linecap="round" fill="none" />
+            </svg>
+          </div>
+          <div class="challenge-title">Talkative Person</div>
+          <div class="challenge-quote">The other person keeps chatting after you need to move on.</div>
+        </div>
+        <div class="challenge-card" onclick="this.classList.toggle('active')">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="9" r="5.5" stroke="#C8843A" stroke-width="1.3" />
+              <path d="M8 6v3l2 1.5" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M5.5 2.5l-2 1.5M10.5 2.5l2 1.5" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="challenge-title">Busy Listener</div>
+          <div class="challenge-quote">The person sounds like they want to start quickly.</div>
+        </div>
+        <div class="challenge-card" onclick="this.classList.toggle('active')">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="5.5" stroke="#C8843A" stroke-width="1.3" />
+              <path d="M6 6.5c0-1 .9-1.5 2-1.5s2 .7 2 1.5c0 1-1 1.5-2 2" stroke="#C8843A" stroke-width="1.3"
+                stroke-linecap="round" />
+              <circle cx="8" cy="11" r="0.75" fill="#C8843A" />
+            </svg>
+          </div>
+          <div class="challenge-title">New Relationship</div>
+          <div class="challenge-quote">You do not know the person well yet.</div>
+        </div>
+        <div class="challenge-card" onclick="this.classList.toggle('active')">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="2" y="5" width="12" height="8" rx="1.5" stroke="#C8843A" stroke-width="1.3" />
+              <path d="M5 5V4a3 3 0 0 1 6 0v1" stroke="#C8843A" stroke-width="1.3" />
+              <circle cx="8" cy="9" r="1.5" stroke="#C8843A" stroke-width="1.3" />
+            </svg>
+          </div>
+          <div class="challenge-title">Familiar Relationship</div>
+          <div class="challenge-quote">You know the person, but the conversation is still professional.</div>
+        </div>
+        <div class="challenge-card" onclick="this.classList.toggle('active')">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="2.5" y="3.5" width="11" height="9" rx="1.5" stroke="#C8843A" stroke-width="1.3" />
+              <path d="M5 7h6M5 9.5h4" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="challenge-title">Awkward Silence</div>
+          <div class="challenge-quote">There is a pause at the start of the call.</div>
+        </div>
+        <div class="challenge-card" onclick="this.classList.toggle('active')">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z" stroke="#C8843A" stroke-width="1.3" fill="none" />
+              <path d="M8 5.5v2.5l2 1.5" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M5 2L3 4M11 2l2 2" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="challenge-title">International Call</div>
+          <div class="challenge-quote">Use safe context without becoming too personal.</div>
+        </div>
+        <div class="challenge-card" onclick="this.classList.toggle('active')">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+          <div class="challenge-title">Time Limit</div>
+          <div class="challenge-quote">You have 30 seconds to move from opening into business.</div>
+        </div>
+        <div class="challenge-card" onclick="this.classList.toggle('active')">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 3v10M4 8h8M5 5l6 6M11 5l-6 6" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="challenge-title">No Small Talk</div>
+          <div class="challenge-quote">The other person jumps straight into the topic.</div>
+        </div>
+        <div class="challenge-card" onclick="this.classList.toggle('active')">
+          <div class="challenge-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="3" y="5" width="10" height="8" rx="1" stroke="#C8843A" stroke-width="1.3" />
+              <path d="M6 5V4a2 2 0 0 1 4 0v1" stroke="#C8843A" stroke-width="1.3" />
+              <path d="M8 9v2" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="challenge-title">Rescheduled Call</div>
+          <div class="challenge-quote">Acknowledge the delay and move forward.</div>
+        </div>
+      </div>
+      <div class="card mt-20">
+        <div class="section-label mb-8">How to use these</div>
+        <p style="font-size:14px;color:var(--navy);line-height:1.65;margin-bottom:12px">Choose one prompt from the
+          Practice Prompt Library and one challenge from this page. Practise using one skill or the full framework.</p>
+        <div class="challenge-example">
+          <p><strong>Opening:</strong> New client Zoom call.</p>
+          <p><strong>Challenge:</strong> The client gives a one-word answer to your small-talk question.</p>
+          <p class="task">Task: Acknowledge it and move to the bridge without making it awkward.</p>
+        </div>
+        <p style="font-size:13px;color:var(--muted);margin-top:12px;font-style:italic">Rule: Add one challenge at a
+          time. The goal is not to make more conversation &#8212; the goal is to start warmly and move into business
+          smoothly.</p>
+      </div>
+    </div>
+
+    <!-- PAGE 15 ─ WHAT GOOD LOOKS LIKE ─────────────────────────── -->
+    <div class="page" id="page-15">
+      <div class="page-eyebrow">Standard</div>
+      <h1 class="page-title">What Good Small Talk to Business Looks Like</h1>
+      <p class="page-subtitle">A strong opening feels warm, brief, and directed. It creates comfort, then moves into the
+        real conversation.</p>
+      <div class="good-list mt-8">
+        <div class="good-item">
+          <div class="good-num">1</div>
+          <div>
+            <div class="good-title">Warm opening</div>
+            <div class="good-phrase">The student starts naturally and professionally &#8212; not stiff, not over-casual.
+            </div>
+          </div>
+        </div>
+        <div class="good-item">
+          <div class="good-num">2</div>
+          <div>
+            <div class="good-title">Safe topic</div>
+            <div class="good-phrase">The small talk is light, appropriate, and not too personal.</div>
+          </div>
+        </div>
+        <div class="good-item">
+          <div class="good-num">3</div>
+          <div>
+            <div class="good-title">Short exchange</div>
+            <div class="good-phrase">The rapport moment does not take over the call.</div>
+          </div>
+        </div>
+        <div class="good-item">
+          <div class="good-num">4</div>
+          <div>
+            <div class="good-title">Natural bridge</div>
+            <div class="good-phrase">&#8220;Shall we get started?&#8221; &#8212; The student moves into business without
+              sounding abrupt or mechanical.</div>
+          </div>
+        </div>
+        <div class="good-item">
+          <div class="good-num">5</div>
+          <div>
+            <div class="good-title">Clear purpose</div>
+            <div class="good-phrase">The other person knows what the conversation is about.</div>
+          </div>
+        </div>
+        <div class="good-item">
+          <div class="good-num">6</div>
+          <div>
+            <div class="good-title">Smooth continuation</div>
+            <div class="good-phrase">The first business question or agenda item follows naturally.</div>
+          </div>
+        </div>
+        <div class="good-item">
+          <div class="good-num">7</div>
+          <div>
+            <div class="good-title">Flexible control</div>
+            <div class="good-phrase">The student can handle short answers, silence, or overlong small talk.</div>
+          </div>
+        </div>
+      </div>
+      <div class="card mt-20">
+        <div class="section-label mb-8">Strong small talk to business checklist</div>
+        <p style="font-size:13.5px;color:var(--muted);margin-bottom:14px">A strong opening usually does most of these:
+        </p>
+        <div class="checklist">
+          <div class="checklist-item"><svg width="12" height="12" style="color:#2D8F87">
+              <use href="#icon-check-sm" />
+            </svg>starts with a warm greeting</div>
+          <div class="checklist-item"><svg width="12" height="12" style="color:#2D8F87">
+              <use href="#icon-check-sm" />
+            </svg>uses the person&#8217;s name when natural</div>
+          <div class="checklist-item"><svg width="12" height="12" style="color:#2D8F87">
+              <use href="#icon-check-sm" />
+            </svg>keeps small talk short</div>
+          <div class="checklist-item"><svg width="12" height="12" style="color:#2D8F87">
+              <use href="#icon-check-sm" />
+            </svg>avoids overly personal topics</div>
+          <div class="checklist-item"><svg width="12" height="12" style="color:#2D8F87">
+              <use href="#icon-check-sm" />
+            </svg>responds naturally to short answers</div>
+          <div class="checklist-item"><svg width="12" height="12" style="color:#2D8F87">
+              <use href="#icon-check-sm" />
+            </svg>uses a bridge phrase</div>
+          <div class="checklist-item"><svg width="12" height="12" style="color:#2D8F87">
+              <use href="#icon-check-sm" />
+            </svg>states the purpose clearly</div>
+          <div class="checklist-item"><svg width="12" height="12" style="color:#2D8F87">
+              <use href="#icon-check-sm" />
+            </svg>moves into the first useful question or agenda item</div>
+          <div class="checklist-item"><svg width="12" height="12" style="color:#2D8F87">
+              <use href="#icon-check-sm" />
+            </svg>does not sound robotic</div>
+          <div class="checklist-item"><svg width="12" height="12" style="color:#2D8F87">
+              <use href="#icon-check-sm" />
+            </svg>does not get stuck in small talk</div>
+        </div>
+      </div>
+      <div class="mini-example mt-16">
+        <div class="mini-example-label">Example Strong Opening</div>
+        <div class="client-label">Weak</div>
+        <div class="client-quote">&#8220;Hello. How are you? Fine? Okay. Let&#8217;s start.&#8221;</div>
+        <div class="client-label mt-12">Stronger</div>
+        <div class="client-quote" style="border-left-color:var(--teal)">&#8220;Hi Maria, good to see you. Thanks for
+          making the time today. Shall we get started? The main thing I&#8217;d like to cover is your current onboarding
+          process. To start, could you walk me through how it works now?&#8221;</div>
+      </div>
+      <div class="optional-q mt-16">
+        <div class="optional-q-label">Tone note</div>
+        <div class="optional-q-text">Good small talk to business sounds warm, brief, and purposeful &#8212; not abrupt,
+          fake, overly personal, or endless.</div>
+      </div>
+    </div>
+
+    <!-- PAGE 16 ─ COMPLETION ───────────────────────────────────── -->
+    <div class="page" id="page-16">
+      <div class="completion-hero">
+        <div class="completion-badge"><svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+            <path d="M8 18l6 6 14-14" stroke="white" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></div>
+        <h1 class="completion-title">Small Talk to Business<br>Complete</h1>
+        <p class="completion-sub">You now have a clear structure for moving naturally from friendly opening into the
+          business conversation.</p>
+      </div>
+
+      <div class="win-message">You can now start professional conversations warmly and guide them into business with
+        confidence.</div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="section-label mb-8">What you can do now</div>
+          <div class="can-do-list">
+            <div class="can-do-item">
+              <div class="can-do-check"><svg width="11" height="11" style="color:#2D8F87">
+                  <use href="#icon-check-lg" />
+                </svg></div>Open a call or meeting warmly
+            </div>
+            <div class="can-do-item">
+              <div class="can-do-check"><svg width="11" height="11" style="color:#2D8F87">
+                  <use href="#icon-check-lg" />
+                </svg></div>Use safe small talk topics
+            </div>
+            <div class="can-do-item">
+              <div class="can-do-check"><svg width="11" height="11" style="color:#2D8F87">
+                  <use href="#icon-check-lg" />
+                </svg></div>Respond naturally to short answers
+            </div>
+            <div class="can-do-item">
+              <div class="can-do-check"><svg width="11" height="11" style="color:#2D8F87">
+                  <use href="#icon-check-lg" />
+                </svg></div>Avoid small talk becoming too long
+            </div>
+            <div class="can-do-item">
+              <div class="can-do-check"><svg width="11" height="11" style="color:#2D8F87">
+                  <use href="#icon-check-lg" />
+                </svg></div>Bridge into business without sounding abrupt
+            </div>
+            <div class="can-do-item">
+              <div class="can-do-check"><svg width="11" height="11" style="color:#2D8F87">
+                  <use href="#icon-check-lg" />
+                </svg></div>State the purpose of a call clearly
+            </div>
+            <div class="can-do-item">
+              <div class="can-do-check"><svg width="11" height="11" style="color:#2D8F87">
+                  <use href="#icon-check-lg" />
+                </svg></div>Continue into the first question or agenda item
+            </div>
+            <div class="can-do-item">
+              <div class="can-do-check"><svg width="11" height="11" style="color:#2D8F87">
+                  <use href="#icon-check-lg" />
+                </svg></div>Sound warm and professional at the same time
+            </div>
+          </div>
+        </div>
+
+        <div class="completion-framework">
+          <div class="completion-framework-label">Core Framework</div>
+          <div class="completion-framework-list">
+            <div class="completion-framework-step">
+              <span class="completion-framework-dot">1</span>
+              <span class="completion-framework-name">Open</span>
+            </div>
+            <div class="completion-framework-step">
+              <span class="completion-framework-dot">2</span>
+              <span class="completion-framework-name">Exchange</span>
+            </div>
+            <div class="completion-framework-step">
+              <span class="completion-framework-dot">3</span>
+              <span class="completion-framework-name">Bridge</span>
+            </div>
+            <div class="completion-framework-step">
+              <span class="completion-framework-dot">4</span>
+              <span class="completion-framework-name">Purpose</span>
+            </div>
+            <div class="completion-framework-step">
+              <span class="completion-framework-dot">5</span>
+              <span class="completion-framework-name">Continue</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-20">
+        <div class="section-label mb-8">Optional reflection</div>
+        <div class="reflection-q">Which opening pattern do you most want to improve: awkward silence, abrupt business
+          start, overlong small talk, unsafe topics, weak purpose-setting, or unclear first question?</div>
+        <div class="reflection-q">Which bridge phrase feels most useful for your real calls?</div>
+        <div class="reflection-q last">Where do you most need this skill: client calls, discovery calls, internal
+          meetings, follow-up calls, or international Zoom calls?</div>
+      </div>
+
+      <div class="suggested-next-section">
+        <div class="section-label suggested-next-label">Suggested Next Modules</div>
+        <div class="next-modules">
+          <a class="next-module-card" href="https://vagabondigital.github.io/client-call-confidence-module/"
+            target="_blank" rel="noopener">
+            <div class="next-module-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M8 12h8M8 8h8M8 16h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                <rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6" />
+              </svg>
+            </div>
+            <div class="next-module-content">
+              <div class="next-module-kicker">Next Path</div>
+              <div class="next-module-title">Client Call Confidence</div>
+              <div class="next-module-desc"><strong>Best for:</strong> more structure and control during the rest of
+                the client call.</div>
+            </div>
+            <div class="next-module-arrow">&#8594;</div>
+          </a>
+
+          <a class="next-module-card" href="https://vagabondigital.github.io/discovery-call-foundations-module/"
+            target="_blank" rel="noopener">
+            <div class="next-module-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6" />
+                <path d="M17 17l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+                <path d="M8 11h6M11 8v6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+              </svg>
+            </div>
+            <div class="next-module-content">
+              <div class="next-module-kicker">Next Path</div>
+              <div class="next-module-title">Discovery Call Foundations</div>
+              <div class="next-module-desc"><strong>Best for:</strong> moving from the opening into stronger client
+                questions.</div>
+            </div>
+            <div class="next-module-arrow">&#8594;</div>
+          </a>
+
+          <a class="next-module-card" href="https://vagabondigital.github.io/rapport-and-professional-tone-module/"
+            target="_blank" rel="noopener">
+            <div class="next-module-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M7 8.5C7 6.6 8.6 5 10.5 5S14 6.6 14 8.5 12.4 12 10.5 12 7 10.4 7 8.5Z" stroke="currentColor"
+                  stroke-width="1.6" />
+                <path d="M14.5 10.5C16 10.5 17.2 9.3 17.2 7.8S16 5.1 14.5 5.1" stroke="currentColor" stroke-width="1.6"
+                  stroke-linecap="round" />
+                <path d="M4.5 19C5.2 16.6 7.4 15 10.5 15S15.8 16.6 16.5 19" stroke="currentColor" stroke-width="1.6"
+                  stroke-linecap="round" />
+                <path d="M16.5 15.2C18.2 15.7 19.4 17 19.8 19" stroke="currentColor" stroke-width="1.6"
+                  stroke-linecap="round" />
+              </svg>
+            </div>
+            <div class="next-module-content">
+              <div class="next-module-kicker">Next Path</div>
+              <div class="next-module-title">Rapport and Professional Tone</div>
+              <div class="next-module-desc"><strong>Best for:</strong> sounding warmer, more natural, and more
+                professional across the whole conversation.</div>
+            </div>
+            <div class="next-module-arrow">&#8594;</div>
+          </a>
+
+          <a class="next-module-card"
+            href="https://vagabondigital.github.io/cross-cultural-business-communication-module/" target="_blank"
+            rel="noopener">
+            <div class="next-module-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6" />
+                <path d="M3 12h18M12 3c-2.5 3-4 5.5-4 9s1.5 6 4 9M12 3c2.5 3 4 5.5 4 9s-1.5 6-4 9" stroke="currentColor"
+                  stroke-width="1.6" stroke-linecap="round" />
+              </svg>
+            </div>
+            <div class="next-module-content">
+              <div class="next-module-kicker">Next Path</div>
+              <div class="next-module-title">Cross-Cultural Business Communication</div>
+              <div class="next-module-desc"><strong>Best for:</strong> adapting openings, tone, and directness across
+                international business contexts.</div>
+            </div>
+            <div class="next-module-arrow">&#8594;</div>
+          </a>
+        </div>
+      </div>
+
+      <div class="completion-actions">
+        <button class="btn-teal" onclick="goToPage(17)">Bonus Round <svg width="15" height="15" style="color:white">
+            <use href="#icon-arrow-right-bonus" />
+          </svg></button>
+        <div style="font-size:12.5px;color:var(--muted)">Optional &#8212; one more round if useful</div>
+        <button class="btn-back" style="border-color:var(--border)" onclick="jumpToQuickReference()">
+          <svg width="13" height="13">
+            <use href="#icon-doc-plus" />
+          </svg>
+          Quick Reference
+        </button>
+      </div>
+    </div>
+
+    <!-- PAGE 17 ─ BONUS ROUND ──────────────────────────────────── -->
+    <div class="page" id="page-17">
+      <div class="page-eyebrow">Optional</div>
+      <h1 class="page-title">Bonus Round</h1>
+      <p class="page-subtitle">One extra practice round. Choose an option and practise the skill one more time. No new
+        theory &#8212; just one more useful round.</p>
+      <div class="bonus-cards mt-8">
+        <div class="bonus-card">
+          <div class="bonus-num">Option 1</div>
+          <div class="bonus-title">30-Second Opening</div>
+          <div class="bonus-desc">Start a call, exchange one short line, bridge into business, and state the purpose in
+            under 30 seconds.</div>
+          <div class="bonus-options">
+            <div class="bonus-opt" onclick="this.classList.toggle('selected')">new client call</div>
+            <div class="bonus-opt" onclick="this.classList.toggle('selected')">busy listener</div>
+            <div class="bonus-opt" onclick="this.classList.toggle('selected')">international Zoom</div>
+          </div>
+          <div class="bonus-for mt">Best for: concision, call control, busy listeners</div>
+        </div>
+        <div class="bonus-card">
+          <div class="bonus-num">Option 2</div>
+          <div class="bonus-title">Awkward Silence Recovery</div>
+          <div class="bonus-desc">The call starts with silence. Use one warm opening line, one safe topic, and one
+            bridge phrase.</div>
+          <div class="bonus-options">
+            <div class="bonus-opt" onclick="this.classList.toggle('selected')">one-word answers</div>
+            <div class="bonus-opt" onclick="this.classList.toggle('selected')">silent client</div>
+            <div class="bonus-opt" onclick="this.classList.toggle('selected')">unfamiliar person</div>
+          </div>
+          <div class="bonus-for mt">Best for: confidence, live openings, natural flow</div>
+        </div>
+        <div class="bonus-card">
+          <div class="bonus-num">Option 3</div>
+          <div class="bonus-title">Friendly-to-Business Transition</div>
+          <div class="bonus-desc">Start with light small talk, then move into the first business question without
+            sounding abrupt.</div>
+          <div class="bonus-options">
+            <div class="bonus-opt" onclick="this.classList.toggle('selected')">talkative client</div>
+            <div class="bonus-opt" onclick="this.classList.toggle('selected')">returning relationship</div>
+            <div class="bonus-opt" onclick="this.classList.toggle('selected')">discovery call opening</div>
+          </div>
+          <div class="bonus-for mt">Best for: rapport, transition, discovery calls</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUICK REFERENCE ─ JUMP-ONLY, NOT IN PAGE FLOW ──────────── -->
+    <div class="page" id="quick-reference">
+      <div class="page-eyebrow">Student Reference</div>
+      <h1 class="page-title">Small Talk to Business Quick Reference</h1>
+      <p class="page-subtitle">A compact review of the framework, key phrases, and one model opening.</p>
+
+      <!-- Section 1: Framework -->
+      <div class="section-label" style="margin-bottom:8px">Framework</div>
+      <div class="completion-framework" style="margin-top:0">
+        <div class="completion-framework-label">Core Framework</div>
+        <div class="completion-framework-list">
+          <div class="completion-framework-step">
+            <div class="completion-framework-dot">1</div>
+            <div class="completion-framework-name">Open</div>
+          </div>
+          <div class="completion-framework-step">
+            <div class="completion-framework-dot">2</div>
+            <div class="completion-framework-name">Exchange</div>
+          </div>
+          <div class="completion-framework-step">
+            <div class="completion-framework-dot">3</div>
+            <div class="completion-framework-name">Bridge</div>
+          </div>
+          <div class="completion-framework-step">
+            <div class="completion-framework-dot">4</div>
+            <div class="completion-framework-name">Purpose</div>
+          </div>
+          <div class="completion-framework-step">
+            <div class="completion-framework-dot">5</div>
+            <div class="completion-framework-name">Continue</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: Key Phrases -->
+      <div class="section-label" style="margin-top:24px;margin-bottom:8px">Key Phrases</div>
+      <div class="good-list">
+        <div class="good-item">
+          <div class="good-num">1</div>
+          <div>
+            <div class="good-title">Open</div>
+            <div class="good-phrase">&#8220;Hi Maria, good to see you.&#8221;</div>
+          </div>
+        </div>
+        <div class="good-item">
+          <div class="good-num">2</div>
+          <div>
+            <div class="good-title">Exchange</div>
+            <div class="good-phrase">&#8220;How has your week been so far?&#8221;</div>
+          </div>
+        </div>
+        <div class="good-item">
+          <div class="good-num">3</div>
+          <div>
+            <div class="good-title">Bridge</div>
+            <div class="good-phrase">&#8220;Shall we get started?&#8221;</div>
+          </div>
+        </div>
+        <div class="good-item">
+          <div class="good-num">4</div>
+          <div>
+            <div class="good-title">Purpose</div>
+            <div class="good-phrase">&#8220;The goal for today is&#8230;&#8221;</div>
+          </div>
+        </div>
+        <div class="good-item">
+          <div class="good-num">5</div>
+          <div>
+            <div class="good-title">Continue</div>
+            <div class="good-phrase">&#8220;To start, could you&#8230;&#8221;</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Safe Topic Helper -->
+      <div class="section-label" style="margin-top:24px;margin-bottom:8px">Safe Topic Helper</div>
+      <div class="good-list">
+        <div class="good-item">
+          <div class="good-num" style="background:var(--navy)">W</div>
+          <div>
+            <div class="good-title">Work</div>
+            <div class="good-phrase">&#8220;How has the project been going this week?&#8221;</div>
+          </div>
+        </div>
+        <div class="good-item">
+          <div class="good-num" style="background:var(--navy)">C</div>
+          <div>
+            <div class="good-title">Context</div>
+            <div class="good-phrase">&#8220;Are you joining from the office today?&#8221;</div>
+          </div>
+        </div>
+        <div class="good-item">
+          <div class="good-num" style="background:var(--navy)">I</div>
+          <div>
+            <div class="good-title">Interests</div>
+            <div class="good-phrase">&#8220;Did you manage to get some time off over the weekend?&#8221;</div>
+          </div>
+        </div>
+        <div class="good-item">
+          <div class="good-num" style="background:var(--navy)">D</div>
+          <div>
+            <div class="good-title">Direction</div>
+            <div class="good-phrase">&#8220;What are you hoping to focus on today?&#8221;</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4: Model Opening -->
+      <div class="section-label" style="margin-top:24px;margin-bottom:8px">Model Opening</div>
+      <div class="mini-example" style="margin-top:0">
+        <div class="mini-example-label">Example &#8212; First Discovery Call</div>
+        <div class="client-label">Client</div>
+        <div class="client-quote">&#8220;Hi, nice to meet you.&#8221;</div>
+        <div class="client-label mt-12">Student <span
+            style="font-weight:400;color:var(--teal);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;margin-left:6px">Open
+            + Exchange</span></div>
+        <div class="client-quote" style="border-left-color:var(--teal)">&#8220;Hi Sofia, nice to meet you too. Thanks
+          for making the time today. How has your week been so far?&#8221;</div>
+        <div class="client-label mt-12">Client</div>
+        <div class="client-quote">&#8220;Busy, but good.&#8221;</div>
+        <div class="client-label mt-12">Student <span
+            style="font-weight:400;color:var(--teal);font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;margin-left:6px">Bridge
+            + Purpose + Continue</span></div>
+        <div class="client-quote" style="border-left-color:var(--teal)">&#8220;Glad to hear it. I appreciate you taking
+          the time. Shall we get started? The main thing I&#8217;d like to understand today is how your team currently
+          handles onboarding and where the process feels slow. To start, could you walk me through what happens after a
+          new client signs?&#8221;</div>
+      </div>
+
+      <!-- Section 5: Use This When -->
+      <div class="optional-q" style="margin-top:20px">
+        <div class="optional-q-label">Use this when</div>
+        <div class="optional-q-text">Use this page before client calls, discovery calls, follow-up calls, internal
+          meetings, international Zoom calls, first meetings, or any professional conversation where you need to start
+          warmly and move into business smoothly.</div>
+      </div>
+
+      <!-- Print button -->
+      <div style="margin-top:24px;text-align:center">
+        <button id="qr-print-btn" class="btn-teal" onclick="window.print()">
+          <svg width="15" height="15">
+            <use href="#icon-print" />
+          </svg>
+          Print / Save as PDF
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- JUMP OVERLAY -->
+  <div class="jump-overlay" id="jumpOverlay" onclick="closeJump()"></div>
+
+  <!-- JUMP PANEL -->
+  <div class="jump-panel" id="jumpPanel">
+    <div class="jump-panel-inner">
+      <div class="jump-section-label">Start</div>
+      <div class="jump-links">
+        <button class="jump-link" onclick="jumpTo(1)"><span class="jump-link-title">Landing</span><span
+            class="jump-link-desc">Begin the module</span></button>
+        <button class="jump-link" onclick="jumpTo(2)"><span class="jump-link-title">Overview</span><span
+            class="jump-link-desc">What this module builds</span></button>
+        <button class="jump-link" onclick="jumpTo(3)"><span class="jump-link-title">Skill Path</span><span
+            class="jump-link-desc">See the skill progression</span></button>
+      </div>
+      <div class="jump-section-label">Framework</div>
+      <div class="jump-links">
+        <button class="jump-link" onclick="jumpTo(4)"><span class="jump-link-title">Core Framework</span><span
+            class="jump-link-desc">Learn the five-step structure</span></button>
+        <button class="jump-link" onclick="jumpTo(5)"><span class="jump-link-title">Topic &amp; Transition
+            Map</span><span class="jump-link-desc">Safe topics and weak patterns</span></button>
+      </div>
+      <div class="jump-section-label">Skills</div>
+      <div class="jump-links">
+        <button class="jump-link" onclick="jumpTo(6)"><span class="jump-link-title">Skill 1 &#8212; Open
+            Warmly</span><span class="jump-link-desc">Start in a friendly, professional way.</span></button>
+        <button class="jump-link" onclick="jumpTo(7)"><span class="jump-link-title">Skill 2 &#8212; Exchange
+            Lightly</span><span class="jump-link-desc">Handle one or two lines of small talk.</span></button>
+        <button class="jump-link" onclick="jumpTo(8)"><span class="jump-link-title">Skill 3 &#8212; Bridge Into
+            Business</span><span class="jump-link-desc">Signal the move from rapport to business.</span></button>
+        <button class="jump-link" onclick="jumpTo(9)"><span class="jump-link-title">Skill 4 &#8212; State the
+            Purpose</span><span class="jump-link-desc">Explain what the conversation is about.</span></button>
+        <button class="jump-link" onclick="jumpTo(10)"><span class="jump-link-title">Skill 5 &#8212; Continue
+            Smoothly</span><span class="jump-link-desc">Move into the first business question.</span></button>
+        <button class="jump-link" onclick="jumpTo(11)"><span class="jump-link-title">Put It Together</span><span
+            class="jump-link-desc">Combine the full sequence.</span></button>
+      </div>
+      <div class="jump-section-label">Practice &amp; Reference</div>
+      <div class="jump-links">
+        <button class="jump-link" onclick="jumpTo(12)"><span class="jump-link-title">Language Bank</span><span
+            class="jump-link-desc">Find useful phrases</span></button>
+        <button class="jump-link" onclick="jumpTo(13)"><span class="jump-link-title">Practice Prompts</span><span
+            class="jump-link-desc">Choose focused practice</span></button>
+        <button class="jump-link" onclick="jumpTo(14)"><span class="jump-link-title">Transition Challenge
+            Bank</span><span class="jump-link-desc">Add one realistic challenge</span></button>
+        <button class="jump-link" onclick="jumpTo(15)"><span class="jump-link-title">What Good Looks Like</span><span
+            class="jump-link-desc">Review strong opening performance</span></button>
+      </div>
+      <div class="jump-section-label">Finish</div>
+      <div class="jump-links">
+        <button class="jump-link" onclick="jumpTo(16)"><span class="jump-link-title">Small Talk to Business
+            Complete</span><span class="jump-link-desc">Review what the student can now do</span></button>
+        <button class="jump-link" onclick="jumpTo(17)"><span class="jump-link-title">Bonus Round</span><span
+            class="jump-link-desc">Optional extra practice</span></button>
+        <button class="jump-link" id="qr-jump-link" onclick="jumpToQuickReference()"><span class="jump-link-title">Quick
+            Reference</span><span class="jump-link-desc">Compact student takeaway</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar hidden" id="bottomBar">
+    <div class="bottom-left">
+      <button class="btn-back" id="btnBack" onclick="handleBack()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M9 3L5 7l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+        Back
+      </button>
+      <span class="page-indicator" id="pageIndicator">
+        <span class="page-count-desktop">Page 1 of 17</span>
+        <span class="page-count-mobile">1/17</span>
+      </span>
+    </div>
+    <div class="bottom-right">
+      <button class="btn-jump" id="btnJump" onclick="toggleJump()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M2 4h10M2 7h7M2 10h5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+        </svg>
+        Jump to
+      </button>
+      <button class="btn-continue" id="btnContinue" onclick="handleContinue()">
+        Continue
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M5 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const TOTAL = 17;
+
+    const PAGE_TITLES = {
+      1: 'Landing',
+      2: 'Overview',
+      3: 'Skill Path',
+      4: 'Core Framework',
+      5: 'Topic & Transition Map',
+      6: 'Open Warmly',
+      7: 'Exchange Lightly',
+      8: 'Bridge Into Business',
+      9: 'State the Purpose',
+      10: 'Continue Smoothly',
+      11: 'Put It Together',
+      12: 'Language Bank',
+      13: 'Practice Prompts',
+      14: 'Transition Challenge Bank',
+      15: 'What Good Looks Like',
+      16: 'Complete',
+      17: 'Bonus Round'
+    };
+
+    let cur = 1;
+    let quickRefActive = false;
+
+    function getSec(p) {
+      if (p <= 1) return 0;
+      if (p <= 3) return 0;
+      if (p <= 5) return 1;
+      if (p <= 11) return 2;
+      if (p <= 15) return 3;
+      return 4;
+    }
+
+    function updateHeader(p) {
+      const s = getSec(p);
+      for (let i = 0; i < 5; i++) {
+        const step = document.getElementById('sec-' + i);
+        const conn = document.getElementById('conn-' + i);
+        step.classList.remove('active', 'done');
+        if (conn) conn.classList.remove('done');
+        if (i < s) { step.classList.add('done'); if (conn) conn.classList.add('done'); }
+        else if (i === s) step.classList.add('active');
+      }
+    }
+
+    function updateBar(p) {
+      const back = document.getElementById('btnBack');
+      const cont = document.getElementById('btnContinue');
+      const ind = document.getElementById('pageIndicator');
+      const bar = document.getElementById('bottomBar');
+
+      // Hide entire bottom bar on page 1 (not on quick reference)
+      if (p === 1 && !quickRefActive) {
+        bar.classList.add('hidden');
+      } else {
+        bar.classList.remove('hidden');
+        back.disabled = false;
+      }
+
+      // Page indicator text
+      if (quickRefActive) {
+        ind.innerHTML =
+          '<span class="page-count-desktop">Quick Reference</span>' +
+          '<span class="page-count-mobile">Quick Ref</span>';
+      } else {
+        ind.innerHTML =
+          '<span class="page-count-desktop">Page ' + p + ' of ' + TOTAL + '</span>' +
+          '<span class="page-count-mobile">' + p + '/' + TOTAL + '</span>' +
+          '<span class="page-title-desktop"> &middot; ' + PAGE_TITLES[p] + '</span>';
+      }
+
+      // Continue button
+      if (quickRefActive || p === TOTAL) {
+        cont.style.display = 'none';
+      } else {
+        cont.style.display = 'inline-flex';
+        const lbl = p === 16 ? 'Bonus Round' : 'Continue';
+        cont.innerHTML = lbl + ' <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 3l4 4-4 4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      }
+
+      // Jump panel current highlight
+      document.querySelectorAll('.jump-link').forEach(function (el) {
+        el.classList.remove('current');
+      });
+      if (quickRefActive) {
+        const qrLink = document.getElementById('qr-jump-link');
+        if (qrLink) qrLink.classList.add('current');
+      } else {
+        document.querySelectorAll('.jump-link').forEach(function (el) {
+          const fn = el.getAttribute('onclick');
+          if (fn && fn.includes('jumpTo(' + p + ')')) { el.classList.add('current'); }
+        });
+      }
+    }
+
+    function goToPage(n) {
+      if (n < 1 || n > TOTAL) return;
+      if (quickRefActive) {
+        document.getElementById('quick-reference').classList.remove('active');
+        quickRefActive = false;
+      } else {
+        document.getElementById('page-' + cur).classList.remove('active');
+      }
+      cur = n;
+      document.getElementById('page-' + cur).classList.add('active');
+      updateHeader(cur);
+      updateBar(cur);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function jumpToQuickReference() {
+      closeJump();
+      if (quickRefActive) return;
+      if (cur >= 1 && cur <= TOTAL) {
+        document.getElementById('page-' + cur).classList.remove('active');
+      }
+      quickRefActive = true;
+      document.getElementById('quick-reference').classList.add('active');
+      updateHeader(16);
+      updateBar(cur);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleBack() {
+      if (quickRefActive) {
+        document.getElementById('quick-reference').classList.remove('active');
+        quickRefActive = false;
+        document.getElementById('page-' + cur).classList.add('active');
+        updateHeader(cur);
+        updateBar(cur);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (cur > 1) {
+        goToPage(cur - 1);
+      }
+    }
+
+    function handleContinue() { if (cur < TOTAL) goToPage(cur + 1); }
+
+    // Jump menu
+    function toggleJump() {
+      const panel = document.getElementById('jumpPanel');
+      const overlay = document.getElementById('jumpOverlay');
+      const btn = document.getElementById('btnJump');
+      const isOpen = panel.classList.contains('open');
+      if (isOpen) {
+        panel.classList.remove('open');
+        overlay.classList.remove('open');
+        btn.classList.remove('open');
+      } else {
+        panel.classList.add('open');
+        overlay.classList.add('open');
+        btn.classList.add('open');
+      }
+    }
+
+    function closeJump() {
+      document.getElementById('jumpPanel').classList.remove('open');
+      document.getElementById('jumpOverlay').classList.remove('open');
+      document.getElementById('btnJump').classList.remove('open');
+    }
+
+    function jumpTo(n) {
+      closeJump();
+      goToPage(n);
+    }
+
+    function toggleTopic(card) {
+      const was = card.classList.contains('active');
+      document.querySelectorAll('.topic-card').forEach(function (c) { c.classList.remove('active'); });
+      if (!was) card.classList.add('active');
+    }
+
+    function switchTab(tab, paneId) {
+      const row = tab.closest('.practice-tabs');
+      row.querySelectorAll('.practice-tab').forEach(function (t) { t.classList.remove('active'); });
+      tab.classList.add('active');
+      const sec = tab.closest('.practice-section');
+      sec.querySelectorAll('.practice-pane').forEach(function (p) { p.classList.remove('active'); });
+      const pane = document.getElementById(paneId);
+      if (pane) pane.classList.add('active');
+    }
+
+    function toggleLangGroup(header) {
+      header.closest('.lang-group').classList.toggle('open');
+    }
+
+    function togglePrompt(header) {
+      const item = header.closest('.prompt-item');
+      const was = item.classList.contains('open');
+      document.querySelectorAll('.prompt-item').forEach(function (i) { i.classList.remove('open'); });
+      if (!was) item.classList.add('open');
+    }
+
+    function toggleFullExample(toggle) {
+      toggle.classList.toggle('open');
+    }
+
+    // Close jump panel on Escape
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeJump();
+    });
+
+    updateHeader(1);
+    updateBar(1);
+  </script>
+</body>
+
+</html>
