@@ -1456,6 +1456,25 @@
       line-height: 1.45
     }
 
+    .challenge-detail {
+      display: none;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(200, 132, 58, 0.22);
+    }
+
+    .challenge-card.active .challenge-detail {
+      display: block;
+    }
+
+    .challenge-detail .task {
+      font-size: 13px;
+      color: var(--amber);
+      font-weight: 700;
+      line-height: 1.55;
+      margin: 0;
+    }
+
     /* ── QUICK RECAP ────────────────────────────────────── */
     .quick-recap {
       background: var(--navy);
@@ -2307,28 +2326,6 @@
       flex-direction: column;
       align-items: center;
       gap: 12px
-    }
-
-    /* Challenge example box */
-    .challenge-example {
-      background: var(--bg);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px
-    }
-
-    .challenge-example p {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 4px
-    }
-
-    .challenge-example p:last-child {
-      margin-bottom: 0
-    }
-
-    .challenge-example .task {
-      color: var(--teal);
-      font-weight: 600
     }
 
     /* ── STUDY TOOLS ────────────────────────────────────────── */
@@ -4219,8 +4216,11 @@
       <h1 class="page-title">Transition Challenge Bank</h1>
       <p class="page-subtitle">Once the transition is clear, try the same task with one extra difficulty. Add one
         challenge at a time.</p>
+      <p class="tap-hint">Tap any card to expand it.</p>
+
       <div class="challenge-grid mt-8">
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
           <div class="challenge-icon">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M3 6a5 5 0 0 1 10 0c0 2-1 3.5-2.5 4.5V12H5.5v-1.5C4 9.5 3 8 3 6z" stroke="#C8843A"
@@ -4231,8 +4231,12 @@
           </div>
           <div class="challenge-title">Short Answer</div>
           <div class="challenge-quote">The other person gives a one-word small-talk answer.</div>
+          <div class="challenge-detail">
+            <p class="task">Acknowledge the short answer and bridge forward without making the silence awkward.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
           <div class="challenge-icon">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path
@@ -4242,8 +4246,12 @@
           </div>
           <div class="challenge-title">Talkative Person</div>
           <div class="challenge-quote">The other person keeps chatting after you need to move on.</div>
+          <div class="challenge-detail">
+            <p class="task">Acknowledge what they said, then use a polite bridge into the business topic.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
           <div class="challenge-icon">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <circle cx="8" cy="9" r="5.5" stroke="#C8843A" stroke-width="1.3" />
@@ -4254,8 +4262,12 @@
           </div>
           <div class="challenge-title">Busy Listener</div>
           <div class="challenge-quote">The person sounds like they want to start quickly.</div>
+          <div class="challenge-detail">
+            <p class="task">Keep the opening warm, skip unnecessary small talk, and move quickly into the purpose.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
           <div class="challenge-icon">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <circle cx="8" cy="8" r="5.5" stroke="#C8843A" stroke-width="1.3" />
@@ -4266,8 +4278,12 @@
           </div>
           <div class="challenge-title">New Relationship</div>
           <div class="challenge-quote">You do not know the person well yet.</div>
+          <div class="challenge-detail">
+            <p class="task">Sound friendly and professional without becoming too personal or overly familiar.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
           <div class="challenge-icon">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <rect x="2" y="5" width="12" height="8" rx="1.5" stroke="#C8843A" stroke-width="1.3" />
@@ -4277,8 +4293,12 @@
           </div>
           <div class="challenge-title">Familiar Relationship</div>
           <div class="challenge-quote">You know the person, but the conversation is still professional.</div>
+          <div class="challenge-detail">
+            <p class="task">Keep the tone friendly, but still bridge clearly into the business purpose.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
           <div class="challenge-icon">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <rect x="2.5" y="3.5" width="11" height="9" rx="1.5" stroke="#C8843A" stroke-width="1.3" />
@@ -4287,8 +4307,12 @@
           </div>
           <div class="challenge-title">Awkward Silence</div>
           <div class="challenge-quote">There is a pause at the start of the call.</div>
+          <div class="challenge-detail">
+            <p class="task">Take the lead with a warm opening, then move into a simple bridge or purpose statement.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
           <div class="challenge-icon">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M8 2.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11z" stroke="#C8843A" stroke-width="1.3" fill="none" />
@@ -4299,8 +4323,12 @@
           </div>
           <div class="challenge-title">International Call</div>
           <div class="challenge-quote">Use safe context without becoming too personal.</div>
+          <div class="challenge-detail">
+            <p class="task">Use location, time, or call context briefly, then bridge into the main topic.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
           <div class="challenge-icon">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round"
@@ -4309,8 +4337,12 @@
           </div>
           <div class="challenge-title">Time Limit</div>
           <div class="challenge-quote">You have 30 seconds to move from opening into business.</div>
+          <div class="challenge-detail">
+            <p class="task">Use a short warm opening, a fast bridge, one purpose sentence, and the first question.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
           <div class="challenge-icon">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M8 3v10M4 8h8M5 5l6 6M11 5l-6 6" stroke="#C8843A" stroke-width="1.3" stroke-linecap="round" />
@@ -4318,8 +4350,12 @@
           </div>
           <div class="challenge-title">No Small Talk</div>
           <div class="challenge-quote">The other person jumps straight into the topic.</div>
+          <div class="challenge-detail">
+            <p class="task">Follow their lead, skip the extra rapport, and move directly into the business response.</p>
+          </div>
         </div>
-        <div class="challenge-card" onclick="this.classList.toggle('active')">
+
+        <div class="challenge-card" onclick="toggleChallengeCard(this)">
           <div class="challenge-icon">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <rect x="3" y="5" width="10" height="8" rx="1" stroke="#C8843A" stroke-width="1.3" />
@@ -4329,20 +4365,19 @@
           </div>
           <div class="challenge-title">Rescheduled Call</div>
           <div class="challenge-quote">Acknowledge the delay and move forward.</div>
+          <div class="challenge-detail">
+            <p class="task">Briefly acknowledge the reschedule, then bridge into the purpose without dwelling on it.</p>
+          </div>
         </div>
+
       </div>
+
       <div class="card mt-20">
         <div class="section-label mb-8">How to use these</div>
-        <p style="font-size:14px;color:var(--navy);line-height:1.65;margin-bottom:12px">Choose one prompt from the
-          Practice Prompt Library and one challenge from this page. Practise using one skill or the full framework.</p>
-        <div class="challenge-example">
-          <p><strong>Opening:</strong> New client Zoom call.</p>
-          <p><strong>Challenge:</strong> The client gives a one-word answer to your small-talk question.</p>
-          <p class="task">Task: Acknowledge it and move to the bridge without making it awkward.</p>
-        </div>
-        <p style="font-size:13px;color:var(--muted);margin-top:12px;font-style:italic">Rule: Add one challenge at a
-          time. The goal is not to make more conversation &#8212; the goal is to start warmly and move into business
-          smoothly.</p>
+        <p style="font-size:14px;color:var(--muted);line-height:1.65">Choose one prompt from the Practice Prompts page
+          and one challenge from this page. Practise using one skill or the full framework. Add one challenge at a time.
+          The goal is not to make more conversation. The goal is to start warmly and move into business smoothly, even
+          when the opening becomes more difficult.</p>
       </div>
     </div>
 
@@ -5136,6 +5171,18 @@
 
     function toggleFullExample(toggle) {
       toggle.classList.toggle('open');
+    }
+
+    function toggleChallengeCard(card) {
+      const wasActive = card.classList.contains('active');
+
+      document.querySelectorAll('.challenge-card').forEach(function (c) {
+        c.classList.remove('active');
+      });
+
+      if (!wasActive) {
+        card.classList.add('active');
+      }
     }
 
     // Close jump panel on Escape
